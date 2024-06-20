@@ -12,15 +12,17 @@ def IsExists(user,password, user_agent):
     'username': user}
     files=[]
     headers = {
-        'User-Agent': user_agent,
+        'User-Agent':  user_agent.strip(),
     }
 
     response = requests.request("POST", url, headers=headers, data=payload, files=files)
+    
     csrf=response.cookies["csrftoken"]
     mid=response.cookies["mid"]
     ig_did=response.cookies["ig_did"]
     ig_nrcb=response.cookies["ig_nrcb"]
     headers = {
+        'User-Agent':  user_agent.strip(),
         'X-Csrftoken': f'{csrf}',
         'Cookie': f"csrftoken={csrf}; mid={mid}; ig_did={ig_did}; ig_nrcb={ig_nrcb};"
     }
@@ -35,6 +37,3 @@ def IsExists(user,password, user_agent):
     except :
         final = {'user': True, 'authenticated': False, 'status': 'ok'}
     return final,cookies
-
-
-
