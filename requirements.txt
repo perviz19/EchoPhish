@@ -1,6 +1,7 @@
-Flask==2.0.2
-pytz==2023.5
-requests==2.26.0
-python-dotenv==0.19.2
-gevent==21.8.0
-colorama==0.4.4
+Flask
+pytz
+requests
+python-dotenv
+gevent
+colorama
+datetime
