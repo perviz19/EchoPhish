@@ -1,5 +1,6 @@
 import requests
 import json
+from colorama import Fore, Back, Style
 
 def capture_information(filename, n):
     with open(filename, 'r') as f:
@@ -27,11 +28,51 @@ def set_agent():
     last_line = lines[-1:]
     user_agent =  last_line[0].split(": ", 1)[1]
 
-    return f"\"user_agent\""
+    return user_agent
 
 
 def edit_cookies(cookies):
     cookies = json.loads(cookies)
-    new_cookies =  f"\nds_user_id: {cookies['ds_user_id']}\nsessionid: {cookies['sessionid']}"
+    new_cookies =  f"\nds_user_id: {cookies['ds_user_id']}\nsessionid:  {cookies['sessionid']}"
     return new_cookies
 
+
+def first_art(visit_time, user_ip, user_agent):
+    user_agent = user_agent.strip()
+    message = f"""{Style.BRIGHT}{Fore.YELLOW}
+            Target detected!!
+ --------------------------------------------
+|Enter website in: {Fore.GREEN}{visit_time}                                               
+{Fore.YELLOW} --------------------------------------------
+|IP:~~~~~~~~~~~~~~ {Fore.GREEN}{user_ip}                                                              
+{Fore.YELLOW} --------------------------------------------
+|User-Agent:~~~~~~ {Fore.GREEN}{user_agent}
+{Fore.YELLOW}---------------------------------------------"""
+    print(message)
+
+
+def correct_answer(username,password,cookies):
+    cookies = cookies.strip().split()
+    message = f"""{Style.BRIGHT}{Fore.GREEN}
+            Successful login
+{Fore.YELLOW} --------------------------------------------
+| Username:   {Fore.GREEN}{username}                                               
+{Fore.YELLOW} --------------------------------------------
+| Password:   {Fore.GREEN}{password}                                                              
+{Fore.YELLOW} --------------------------------------------
+| ds_user_id: {Fore.GREEN}{cookies[1]}                                                          
+{Fore.YELLOW}---------------------------------------------
+| sessionid:  {Fore.GREEN}{cookies[3]}
+{Fore.YELLOW}---------------------------------------------"""
+    print(message)
+
+
+def wrong_answer(username,password):
+    message = f"""{Style.BRIGHT}{Fore.RED}
+            Username or Password wrong
+{Fore.YELLOW} --------------------------------------------
+| Username:   {Fore.RED}{username}                                               
+{Fore.YELLOW} --------------------------------------------
+| Password:   {Fore.RED}{password}                                                              
+{Fore.YELLOW} --------------------------------------------"""
+    print(message)
