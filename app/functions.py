@@ -38,7 +38,7 @@ def edit_cookies(cookies):
 
 
 def first_art(visit_time, user_ip, user_agent):
-    user_agent = user_agent.strip()
+    user_agent = user_agent
     message = f"""{Style.BRIGHT}{Fore.YELLOW}
             Target detected!!
  --------------------------------------------
