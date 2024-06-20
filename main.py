@@ -17,17 +17,20 @@ signal.signal(signal.SIGINT, signal_handler)
 
 try:
     subprocess.Popen(["python3", "web_app.py"])
+    
+    time.sleep(2)
 
     subprocess.Popen(["cloudflared", "tunnel", "--no-autoupdate", "--metrics", "localhost:55555", "--url", "http://localhost:8080"], stderr=subprocess.DEVNULL)
+    print("Cloudflared starintg....")
 
-    time.sleep(3)
+    time.sleep(4)
 
     result = subprocess.run(["curl", "-s", "http://localhost:55555/quicktunnel"], capture_output=True, text=True)
     time.sleep(1)
     if result.stdout.strip():
         data = json.loads(result.stdout.strip())
         url = f"http://{data['hostname']}"
-        message = f"{Style.BRIGHT}{Fore.GREEN}------ URL: {url}{Style.RESET_ALL}"
+        message = f"{Style.BRIGHT}{Fore.GREEN}------ URL: \n{url}{Style.RESET_ALL}"
         print(message)
     else:
         raise ValueError("Empty response or invalid JSON format")
