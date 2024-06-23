@@ -1,0 +1,197 @@
+
+body {
+    font-family: sans-serif;
+    background-color: #fafafa;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0;
+    font-size: 14px;
+}
+
+.box {
+    max-width: 350px;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #ffff;
+    border: 1px solid #e6e6e6;
+    border-radius: 1px;
+    margin: 5px 0 10px;
+    padding: 10px 0;
+    flex-grow: 1;
+}
+
+.heading {
+    margin: 40px auto 22px;
+    background-image: url("https://static.cdninstagram.com/rsrc.php/v3/yM/r/8n91YnfPq0s.png");
+    background-position: -97px -104px;
+    background-size: auto;
+    height: 76px;
+    width: 76px;
+    overflow: hidden;
+}
+
+.field {
+    margin: 10px 0;
+    position:relative;
+    font-size: 20px;
+    width: 100%;
+    text-overflow: ellipsis;
+}
+
+.first-text{
+    text-align: center;
+    margin: 0 0 15px;
+    padding: 0;
+    width: 270px;
+}
+
+.error-message{
+    text-align: center;
+    margin: 28px 0 30px 0 ;
+    padding: 0;
+    width: 270px;
+}
+
+input {
+    padding: 9px 0px 7px 9px;
+    font-size: 13px;
+    width: 16rem;
+    height: 1.2rem;
+    outline: none;
+    background: #fafafa;
+    border-radius: 3px;
+    border: 1px solid #efefef;
+}
+
+/* label intial position*/
+
+label {
+    position: absolute;
+    pointer-events: none;
+    left: 10px;
+    padding-bottom: 0px;
+    transform: translateY(10px);
+    line-height: 6px;
+    transition: all ease-out 0.18s;
+    font-size: 13px;
+    color: #898989;
+    padding-top: 6px;
+}
+
+/* hiding placeholder in all browsers */
+
+input::placeholder {
+    visibility: hidden;
+}
+
+/* hiding  placeholder in mozilla */
+.login-form ::-moz-placeholder {
+    color: transparent;
+}
+
+/* label final position */
+input:not(:placeholder-shown)+label {
+    transform: translateY(0px);
+    font-size: 11px;
+    margin-top: 2px;
+}
+
+/* input padding increases if placeholder is not shown */
+input:not(:placeholder-shown) {
+    padding-top: 13px;
+    padding-bottom: 3px;
+}
+
+.login-button {
+    text-align: center;
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background-color: #3897f0;
+    color: #fffefe;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.separator {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: #999;
+    margin-top: 22px;
+}
+
+
+.message{
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+}
+
+.checkbox{
+    width: 16px;
+    border: 1px solid;
+    color: #ff0000;
+    background-color: #ff0101;
+}
+
+.last-message{
+    margin: 7px;
+    margin-top: 20px;
+    width: 260px;
+    text-align: center;
+}
+
+.other {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.get {
+    display:flex;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.apps {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.footer {
+    text-align: center;
+    font-size: 13px;
+    word-spacing: 15px;
+}
+
+.copyright {
+    text-align: center;
+    font-size: 13px;
+}
