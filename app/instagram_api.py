@@ -125,7 +125,6 @@ def two_factor(code, identifier, username, user_agent):
         try:
             final = response.json()
         except Exception as e:
-            print(f"Hata: {e}")
             final = {'user': True, 'authenticated': False, 'status': 'ok'}
 
         return final, cookies
