@@ -68,6 +68,4 @@ try:
 except json.JSONDecodeError as e:
     cleanup()
 
-except subprocess.CalledProcessError as e:
-    cleanup()
 
