@@ -133,13 +133,11 @@ input:not(:placeholder-shown) {
     cursor: pointer;
 }
 
-<<<<<<< HEAD
+
 .login-button:hover{
     background-color: #087ae4;
 }
 
-=======
->>>>>>> 8f0e340a7aa5238cd19b895f7f85d64ec3575819
 .separator {
     display: flex;
     justify-content: flex-start;

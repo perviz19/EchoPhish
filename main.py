@@ -6,7 +6,7 @@ import sys
 import os
 from colorama import Fore, Style
 from app.functions import banner1
-from app.instagram_api import check_tor
+
 
 def cleanup():
     subprocess.run(["pkill", "-f", "python3 web_app.py"], check=True)
@@ -45,9 +45,12 @@ try:
     choose_tor = input()
     if choose_tor == '1':
         os.system("systemctl start tor")
-        check_tor()
+        with open('app/config.py', 'w') as config_file:
+            config_file.write('tor_active = True\n')
+        print(f"{Fore.GREEN}Tor enabled.")
     else:
-        pass
+        with open('app/config.py', 'w') as config_file:
+            config_file.write('tor_active = False\n')
 
     if choose == '2':
         subprocess.Popen(["python3", "web_app.py"])
