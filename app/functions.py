@@ -120,5 +120,5 @@ def banner1():
  |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| 
 (_____)                                                   (_____){Fore.RESET}{Fore.YELLOW}
                                                     V1.3\n
-    If using the tool on a virtual server, use Tor!"""
+{Fore.RED}    If using the tool on a virtual server, use Tor!"""
     print(banner)
