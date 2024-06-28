@@ -1,6 +1,3 @@
-*{
-    box-sizing: border-box;
-}
 
 body {
     font-family: sans-serif;
@@ -21,7 +18,7 @@ a {
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    margin-top: 3rem;
+    margin-top: 10px;
     font-size: 14px;
 }
 
@@ -41,7 +38,7 @@ a {
 }
 
 .heading {
-    margin: 22px auto 12px;
+    margin: 35px auto 30px;
     background-image: url("https://www.instagram.com/static/bundles/es6/sprite_core_b20f2a3cd7e4.png/b20f2a3cd7e4.png");
     background-position: -98px 0;
     height: 51px;
@@ -50,19 +47,26 @@ a {
 }
 
 .field {
-    margin: 5px 0;
+    margin: 10px 0;
     position: relative;
     font-size: 14px;
     width: 100%;
     text-overflow: ellipsis;
-    padding: 0 35px;
+}
+
+.error-message{
+    text-align: center;
+    margin: 0 0 15px;
+    padding: 0;
+    color: rgb(229, 41, 41);
+    width: 270px;
 }
 
 input {
     padding: 9px 0px 7px 9px;
     font-size: 12px;
-    width: 100%;
-    height: 2.4rem;
+    width: 16rem;
+    height: 1.2rem;
     outline: none;
     background: #fafafa;
     border-radius: 3px;
@@ -74,13 +78,13 @@ input {
 label {
     position: absolute;
     pointer-events: none;
-    left: 44px;
+    left: 10px;
     padding-bottom: 15px;
     transform: translateY(10px);
     line-height: 6px;
     transition: all ease-out 0.1s;
-    font-size: 14px;
-    color: #999;
+    font-size: 12px;
+    color: #585757;
     padding-top: 6px;
 }
 
@@ -109,24 +113,26 @@ input:not(:placeholder-shown) {
 
 .login-button {
     text-align: center;
-    width: 77%;
-    border-radius: 5px;
-    margin: auto;
-    display: block;
+    width: 100%;
     padding: 0.5rem;
     border: 1px solid transparent;
-    background-color: #3897f0;
+    background-color: #5bb0f0;
     color: #fff;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 13px;
     cursor: pointer;
+    border-radius: 10px;
+}
+
+.login-button:hover{
+    background-color: #097ce8;
 }
 
 .separator {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #999;
+    color: #504f4f;
     margin-top: 6px;
 }
 
@@ -141,7 +147,6 @@ input:not(:placeholder-shown) {
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    padding: 10px 50px;
 }
 
 .fb-login-btn {
@@ -149,25 +154,15 @@ input:not(:placeholder-shown) {
     border: 0;
     cursor: pointer;
     font-size: 14px;
-    color: #0953f2;
     font-weight: 600;
     background: transparent;
 }
 
-.fb-icon {
-    color: #385185;
-    font-size: 1rem;
-    padding-right: 1px;
-}
-
-.error-message{
-    color: red;
-    text-align: center;
-}
 
 .forgot-password {
     font-size: 11px;
     color: #003569;
+    margin-bottom: 10px
 }
 
 .signup {
@@ -178,19 +173,22 @@ input:not(:placeholder-shown) {
 .get {
     display:flex;
     text-align: center;
-    font-size: 13px;
+    font-size: 14px;
+
 }
 
 .apps {
     display: flex;
     align-items: center;
     text-align: center;
+    margin-bottom: 50px;
 }
 
 .footer {
     text-align: center;
     font-size: 13px;
     word-spacing: 15px;
+    color: #585757;
 }
 
 .copyright {
