@@ -69,8 +69,5 @@ except json.JSONDecodeError as e:
     cleanup()
 
 except subprocess.CalledProcessError as e:
-<<<<<<< HEAD
     cleanup()
-=======
-    cleanup()
->>>>>>> 8f0e340a7aa5238cd19b895f7f85d64ec3575819
+
