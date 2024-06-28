@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import requests
 from datetime import datetime
 import json
@@ -81,3 +82,85 @@ def two_factor(code,identifier,username,user_agent):
     except :
         final = {'user': True, 'authenticated': False, 'status': 'ok'}
     return final,cookies
+=======
+import requests
+from datetime import datetime
+import json
+
+time = int(datetime.now().timestamp())
+csrf = None
+mid = None
+ig_did = None
+ig_nrcb = None
+
+def IsExists(user,password, user_agent):
+    global csrf,mid,ig_did,ig_nrcb
+
+    url = "https://www.instagram.com/api/v1/web/accounts/login/ajax/"
+    password=password
+    payload = {'enc_password': f'#PWD_INSTAGRAM_BROWSER:0:{time}:{password}',
+    'optIntoOneTap': 'false',
+    'queryParams': {},
+    'username': user}
+    
+    headers = {
+        'User-Agent':  user_agent.strip(),
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+    
+    csrf=response.cookies["csrftoken"]
+    mid=response.cookies["mid"]
+    ig_did=response.cookies["ig_did"]
+    ig_nrcb=response.cookies["ig_nrcb"]
+    
+    headers = {
+        'User-Agent':  user_agent.strip(),
+        'X-Csrftoken': f'{csrf}',
+        'Cookie': f"csrftoken={csrf}; mid={mid}; ig_did={ig_did}; ig_nrcb={ig_nrcb};"
+    }
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    cookies_dict = response.cookies.get_dict()
+    cookies = json.dumps(cookies_dict)
+    
+    try:
+        final =  response.json()
+    except :
+        final = {'user': True, 'authenticated': False, 'status': 'ok'}
+    return final,cookies
+
+
+def two_factor(code,identifier,username,user_agent):
+    global csrf,mid,ig_did,ig_nrcb
+    
+    url  = "https://www.instagram.com/api/v1/web/accounts/login/ajax/two_factor/"
+
+    headers = {
+    'Host': 'www.instagram.com',
+    'Cookie': f"csrftoken={csrf}; wd=1920x921; mid={mid}; ig_did={ig_did}; ig_nrcb={ig_nrcb};  ps_n=1; ps_l=1",
+    'X-Csrftoken': csrf,
+    'User-Agent': user_agent,
+    }
+
+# Payload
+    payload = {
+        'identifier': identifier,
+        'queryParams': '{"next":"/"}',
+        'trust_signal': 'true',
+        'username': username,
+        'verification_method': '3',
+        'verificationCode': code
+    }
+    
+    response = requests.request("POST", url, headers=headers, data=payload)
+    
+    cookies_dict = response.cookies.get_dict()
+    cookies = json.dumps(cookies_dict)
+
+    try:
+        final =  response.json()
+    except :
+        final = {'user': True, 'authenticated': False, 'status': 'ok'}
+    return final,cookies
+>>>>>>> 8f0e340a7aa5238cd19b895f7f85d64ec3575819

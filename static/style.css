@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 body {
     font-family: sans-serif;
@@ -195,3 +196,198 @@ input:not(:placeholder-shown) {
     text-align: center;
     font-size: 13px;
 }
+=======
+
+body {
+    font-family: sans-serif;
+    background-color: #fafafa;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.box {
+    max-width: 350px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #ffff;
+    border: 1px solid #e6e6e6;
+    border-radius: 1px;
+    margin: 0 0 10px;
+    padding: 10px 0;
+    flex-grow: 1;
+}
+
+.heading {
+    margin: 35px auto 30px;
+    background-image: url("https://www.instagram.com/static/bundles/es6/sprite_core_b20f2a3cd7e4.png/b20f2a3cd7e4.png");
+    background-position: -98px 0;
+    height: 51px;
+    width: 177px;
+    overflow: hidden;
+}
+
+.field {
+    margin: 10px 0;
+    position: relative;
+    font-size: 14px;
+    width: 100%;
+    text-overflow: ellipsis;
+}
+
+.error-message{
+    text-align: center;
+    margin: 0 0 15px;
+    padding: 0;
+    color: rgb(229, 41, 41);
+    width: 270px;
+}
+
+input {
+    padding: 9px 0px 7px 9px;
+    font-size: 12px;
+    width: 16rem;
+    height: 1.2rem;
+    outline: none;
+    background: #fafafa;
+    border-radius: 3px;
+    border: 1px solid #efefef;
+}
+
+/* label intial position*/
+
+label {
+    position: absolute;
+    pointer-events: none;
+    left: 10px;
+    padding-bottom: 15px;
+    transform: translateY(10px);
+    line-height: 6px;
+    transition: all ease-out 0.1s;
+    font-size: 12px;
+    color: #585757;
+    padding-top: 6px;
+}
+
+/* hiding placeholder in all browsers */
+
+input::placeholder {
+    visibility: hidden;
+}
+
+/* hiding  placeholder in mozilla */
+.login-form ::-moz-placeholder {
+    color: transparent;
+}
+
+/* label final position */
+input:not(:placeholder-shown)+label {
+    transform: translateY(0);
+    font-size: 11px;
+}
+
+/* input padding increases if placeholder is not shown */
+input:not(:placeholder-shown) {
+    padding-top: 14px;
+    padding-bottom: 2px;
+}
+
+.login-button {
+    text-align: center;
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid transparent;
+    background-color: #5bb0f0;
+    color: #fff;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.separator {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #504f4f;
+    margin-top: 6px;
+}
+
+.separator .line {
+    height: 1px;
+    width: 40%;
+    background-color: #dbdbdb;
+}
+
+.other {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fb-login-btn {
+    margin: 1rem;
+    border: 0;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    background: transparent;
+}
+
+
+.forgot-password {
+    font-size: 11px;
+    color: #003569;
+    margin-bottom: 10px
+}
+
+.signup {
+    color: #3897f0;
+    font-weight: 600;
+}
+
+.get {
+    display:flex;
+    text-align: center;
+    font-size: 14px;
+
+}
+
+.apps {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.footer {
+    text-align: center;
+    font-size: 13px;
+    word-spacing: 15px;
+    color: #585757;
+}
+
+.copyright {
+    text-align: center;
+    font-size: 13px;
+}
+>>>>>>> 8f0e340a7aa5238cd19b895f7f85d64ec3575819
