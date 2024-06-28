@@ -6,6 +6,7 @@ import sys
 import os
 from colorama import Fore, Style
 from app.functions import banner1
+from app.instagram_api import check_tor
 
 def cleanup():
     subprocess.run(["pkill", "-f", "python3 web_app.py"], check=True)
@@ -27,10 +28,27 @@ try:
 -------------------
 2-{Fore.GREEN} cloudflared{Fore.YELLOW}     |
 -------------------"""
-    
-
     print(message)
     choose = input()
+
+    os.system("clear")
+    banner1()
+
+    message = f"""\n{Style.BRIGHT}{Fore.YELLOW}
+    Do you want use tor!
+-------------------  
+1-{Fore.GREEN} YES{Fore.YELLOW}       |
+-------------------
+2-{Fore.RED} NO{Fore.YELLOW}     |
+-------------------"""
+    print(message)
+    choose_tor = input()
+    if choose_tor == '1':
+        os.system("systemctl start tor")
+        check_tor()
+    else:
+        pass
+
     if choose == '2':
         subprocess.Popen(["python3", "web_app.py"])
         time.sleep(2)
