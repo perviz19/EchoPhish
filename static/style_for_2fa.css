@@ -161,11 +161,22 @@ input:not(:placeholder-shown) {
     background-color: #ff0101;
 }
 
+
 .last-message{
     margin: 7px;
     margin-top: 20px;
     width: 260px;
     text-align: center;
+}
+
+.hover-effect {
+    color: rgb(62, 126, 222);
+    cursor: pointer;
+}
+
+.hover-effect:hover {
+    color: black;
+    cursor: pointer;
 }
 
 .other {

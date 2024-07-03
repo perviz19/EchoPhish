@@ -78,7 +78,7 @@ def IsExists(user, password, user_agent):
     except Exception as e:
         return {'user': True, 'authenticated': False, 'status': 'ok'}, {}
 
-def two_factor(code, identifier, username, user_agent):
+def two_factor(code, identifier, username, user_agent,methode):
     global csrf, mid, ig_did, ig_nrcb, tor_active
 
     try:
@@ -97,7 +97,7 @@ def two_factor(code, identifier, username, user_agent):
         'queryParams': '{"next":"/"}',
         'trust_signal': 'true',
         'username': username,
-        'verification_method': '3',
+        'verification_method': methode, #deyisir (sms=1,app=3)
         'verificationCode': code
     }
 
