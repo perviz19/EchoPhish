@@ -120,5 +120,6 @@ def banner1():
  |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| 
 (_____)                                                   (_____){Fore.RESET}{Fore.YELLOW}
                                                     V1.4\n
-{Fore.RED}    If using the tool on a virtual server, select Tor!"""
+{Fore.RED}    It is recommended to use a VPN when using the tool.
+"""
     print(banner)
