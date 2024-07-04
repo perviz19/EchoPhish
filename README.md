@@ -1,8 +1,5 @@
 # EchoPhish
 
-
-## Description
-
 Explain what the project does. What problem does it solve? Why should someone use your project? Provide context and add any necessary background information.
 
 ## Features
