@@ -34,24 +34,6 @@ try:
     os.system("clear")
     banner1()
 
-    message = f"""\n{Style.BRIGHT}{Fore.YELLOW}
-    Do you want use tor!
--------------------  
-1-{Fore.GREEN} YES{Fore.YELLOW}       |
--------------------
-2-{Fore.RED} NO{Fore.YELLOW}     |
--------------------"""
-    print(message)
-    choose_tor = input()
-    if choose_tor == '1':
-        os.system("systemctl start tor")
-        with open('app/config.py', 'w') as config_file:
-            config_file.write('tor_active = True\n')
-        print(f"{Fore.GREEN}Tor enabled.")
-    else:
-        with open('app/config.py', 'w') as config_file:
-            config_file.write('tor_active = False\n')
-
     if choose == '2':
         subprocess.Popen(["python3", "web_app.py"])
         time.sleep(2)
