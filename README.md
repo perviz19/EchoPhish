@@ -16,3 +16,7 @@ git clone https://github.com/perviz19/EchoPhish.git
 cd EchoPhish
 pip install -r requirements.txt
 ```
+## Running the Code
+```
+python3 main.py
+```
