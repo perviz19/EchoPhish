@@ -13,8 +13,6 @@
 
 ## Installation
 
-Provide step-by-step instructions on how to install your project. Include any prerequisites or dependencies needed. It's helpful to include code examples.
-
 ```bash
 git clone https://github.com/perviz19/EchoPhish.git
 cd EchoPhish
