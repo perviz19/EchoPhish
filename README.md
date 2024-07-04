@@ -14,4 +14,5 @@ Provide step-by-step instructions on how to install your project. Include any pr
 ```bash
 $ git clone https://github.com/perviz19/EchoPhish.git
 $ cd EchoPhish
-$ pip install -r requirements.txt```
+$ pip install -r requirements.txt
+```
