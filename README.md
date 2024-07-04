@@ -12,6 +12,6 @@ Explain what the project does. What problem does it solve? Why should someone us
 Provide step-by-step instructions on how to install your project. Include any prerequisites or dependencies needed. It's helpful to include code examples.
 
 ```bash
-$ git clone https://github.com/username/repository.git
-$ cd repository/
-$ npm install  # or any other installation command
+$ git clone https://github.com/perviz19/EchoPhish.git
+$ cd EchoPhish
+$ pip install -r requirements.txt```
