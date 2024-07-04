@@ -1,6 +1,5 @@
 # Project Name
-
-Short description or tagline for the project.
+EchoPhish
 
 ## Table of Contents
 
