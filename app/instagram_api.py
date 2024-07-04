@@ -7,18 +7,10 @@ csrf = None
 mid = None
 ig_did = None
 ig_nrcb = None
-tor_active = False  
 
 def IsExists(user, password, user_agent):
-    global csrf, mid, ig_did, ig_nrcb, tor_active
+    global csrf, mid, ig_did, ig_nrcb
 
-    try:
-        from app.config import tor_active as app_tor_active
-        tor_active = app_tor_active
-    except ImportError:
-        tor_active = False
-
-    
     if not user_agent:
         user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
 
@@ -36,18 +28,8 @@ def IsExists(user, password, user_agent):
         'User-Agent': user_agent.strip(),
     }
 
-    
-    proxies = {
-        'http': 'socks5h://127.0.0.1:9050',
-        'https': 'socks5h://127.0.0.1:9050'
-    }
-
-    
     try:
-        if tor_active:
-            response = requests.post(url, headers=headers, data=payload, proxies=proxies)
-        else:
-            response = requests.post(url, headers=headers, data=payload)
+        response = requests.post(url, headers=headers, data=payload)
             
         
         csrf = response.cookies.get("csrftoken")
@@ -60,10 +42,8 @@ def IsExists(user, password, user_agent):
             'Cookie': f"csrftoken={csrf}; mid={mid}; ig_did={ig_did}; ig_nrcb={ig_nrcb};"
         })
 
-        if tor_active:
-            response = requests.post(url, headers=headers, data=payload, proxies=proxies)
-        else:
-            response = requests.post(url, headers=headers, data=payload)
+
+        response = requests.post(url, headers=headers, data=payload)
 
         cookies_dict = response.cookies.get_dict()
         cookies = json.dumps(cookies_dict)
@@ -79,13 +59,7 @@ def IsExists(user, password, user_agent):
         return {'user': True, 'authenticated': False, 'status': 'ok'}, {}
 
 def two_factor(code, identifier, username, user_agent,methode):
-    global csrf, mid, ig_did, ig_nrcb, tor_active
-
-    try:
-        from app.config import tor_active as app_tor_active
-        tor_active = app_tor_active
-    except ImportError:
-        tor_active = False
+    global csrf, mid, ig_did, ig_nrcb
 
     if not user_agent:
         user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
@@ -108,16 +82,8 @@ def two_factor(code, identifier, username, user_agent,methode):
         'User-Agent': user_agent,
     }
 
-    proxies = {
-        'http': 'socks5h://127.0.0.1:9050',
-        'https': 'socks5h://127.0.0.1:9050'
-    }
-
     try:
-        if tor_active:
-            response = requests.post(url, headers=headers, data=payload, proxies=proxies)
-        else:
-            response = requests.post(url, headers=headers, data=payload)
+        response = requests.post(url, headers=headers, data=payload)
 
         cookies_dict = response.cookies.get_dict()
         cookies = json.dumps(cookies_dict)
