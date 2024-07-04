@@ -1,6 +1,6 @@
 # EchoPhish
 
-###EchoPhish tool is a phishing tool created specifically for Instagram. What makes this tool superior to others?
+### EchoPhish tool is a phishing tool created specifically for Instagram. What makes this tool superior to others?
 
 1) EchoPhish accepts login attempts only if the correct username and password are entered.
 2) It steals cookies, allowing direct access to accounts with two-factor authentication enabled (provided the correct two-factor authentication code is also entered). It supports all types of two-factor authentication methods.
