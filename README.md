@@ -1,15 +1,5 @@
 # EchoPhish
 
-## Table of Contents
-
-- [Project Name](#project-name)
-  - [Table of Contents](#table-of-contents)
-  - [Description](#description)
-  - [Features](#features)
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [Contributing](#contributing)
-  - [License](#license)
 
 ## Description
 
