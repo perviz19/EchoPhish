@@ -1,5 +1,4 @@
-# Project Name
-EchoPhish
+# EchoPhish
 
 ## Table of Contents
 
