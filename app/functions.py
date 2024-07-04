@@ -119,7 +119,7 @@ def banner1():
  |   | |______\___|_| |_|\___/  |_|    |_| |_|_|___/_| |_| |   | 
  |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| 
 (_____)                                                   (_____){Fore.RESET}{Fore.YELLOW}
-                                                    V1.4\n
-{Fore.RED}    It is recommended to use a VPN when using the tool.
+                                                    V1.5\n
+{Fore.RED}    
 """
     print(banner)
