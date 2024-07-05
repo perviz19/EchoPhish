@@ -22,9 +22,5 @@ pip install -r requirements.txt
 ```
 python3 main.py
 ```
-## Features
-
-- List of features or functionalities of the project.
-- Bullet points are good for listing.
 
 
