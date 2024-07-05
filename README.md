@@ -22,5 +22,10 @@ pip install -r requirements.txt
 ```
 python3 main.py
 ```
+## Demo
+
+https://github.com/perviz19/EchoPhish/assets/157914250/52a96295-2d5e-41a2-bec7-21d43495746c
+
+
 
 
