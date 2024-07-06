@@ -11,6 +11,11 @@
 4) It can send correctly entered information to Discord via a webhook, eliminating the need to monitor the application screen.
 
 
+## Requiriments
+1. Cloudflared
+2. Python3
+   
+
 ## Installation
 
 ```bash
