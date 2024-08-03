@@ -36,7 +36,7 @@ pip install -r requirements.txt
 ```
 ## Running the Code
 ```
-python3 main.py
+sudo python3 main.py
 ```
 ## Demo
 
