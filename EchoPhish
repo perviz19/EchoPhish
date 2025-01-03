@@ -54,9 +54,26 @@ check_dependencies() {
         echo -e "${GREEN}Cloudflared installed successfully.${RESET}"
     fi
 
+    if ! command -v node &> /dev/null; then
+        echo -e "${YELLOW}Node.js is not installed. Installing...${RESET}"
+        
+        if [ -d "/data/data/com.termux" ]; then
+            pkg update -y && pkg install -y nodejs
+        else
+            curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+        fi
+        echo -e "${GREEN}Node.js installed successfully.${RESET}"
+    fi
+
     if ! command -v tunnelmole &> /dev/null; then
         echo -e "${YELLOW}Tunnelmole is not installed. Installing...${RESET}"
-        curl -O https://install.tunnelmole.com/t357g/install && sudo bash install
+        
+        if [ -d "/data/data/com.termux" ]; then
+            npm install -g tunnelmole
+        else
+            sudo npm install -g tunnelmole
+        fi
         echo -e "${GREEN}Tunnelmole installed successfully.${RESET}"
     fi
 
