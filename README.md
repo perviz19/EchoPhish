@@ -25,6 +25,7 @@ It only demonstrates "how phishing works". You shall not misuse the information 
 ## Requiriments
 1. Python3
 2. Cloudflared
+4. Nodejs
 3. TunnelMole
    
 
