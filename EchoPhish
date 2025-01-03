@@ -78,13 +78,13 @@ select_methode () {
     banner1
 
     echo -e "\n${YELLOW}    Select the method!"
-    echo -e "-------------------  "
-    echo -e "1-${GREEN} localhost${YELLOW}       |"
-    echo -e "-------------------"
-    echo -e "2-${GREEN} cloudflared${YELLOW}     |"
-    echo -e "-------------------"
-    echo -e "3-${GREEN} tunnelmole${YELLOW}      |"
-    echo -e "-------------------"
+    echo -e "----------------------"
+    echo -e "|   1-${GREEN} localhost${YELLOW}       |"
+    echo -e "----------------------"
+    echo -e "|   2-${GREEN} cloudflared${YELLOW}     |"
+    echo -e "----------------------"
+    echo -e "|   3-${GREEN} tunnelmole${YELLOW}      | (Recommended for Termux)"
+    echo -e "----------------------"
 
     read -p "Choose: " choose
 
