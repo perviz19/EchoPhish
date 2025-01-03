@@ -11,7 +11,7 @@ cleanup() {
         killall cloudflared
         echo -e "${YELLOW}Cloudflared stopped.${RESET}"
     fi
-    if pgrep -f "tunnelmole" > /dev/null || pgrep -f "tmole" > /dev/null; || pgrep -f "x-www-browser" > /dev/null; then
+    if pgrep -f "tunnelmole" > /dev/null || pgrep -f "tmole" > /dev/null || pgrep -f "x-www-browser" > /dev/null; then
         pkill -f "tunnelmole"
         pkill -f "tmole"
         pkill -f "x-www-browser"
