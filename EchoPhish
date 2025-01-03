@@ -130,22 +130,9 @@ select_methode () {
             sleep 2
             clear
             banner1
-            echo -e "${YELLOW}Tunnelmole starting....${GREEN}"
-            tmole 8080 &
+            echo -e "${YELLOW}Tunnelmole starting....${GREEN}\n"
+            tmole 8080 
             sleep 2
-
-            result=$(ps aux | grep 'x-www-browser' | grep -o 'http[^ ]*')
-
-            if [[ -n "$result" ]]; then
-                echo -e "${YELLOW} \nURLs: "
-                echo -e "------------------------------------------------"
-                echo -e "${GREEN}$result ${YELLLOW}"
-                echo -e "------------------------------------------------"
-            else
-                echo -e "${RED}Error: Could not find Tunnelmole URL.${RESET}"
-                sleep 1
-                select_methode
-            fi
             ;;
 
         *)
