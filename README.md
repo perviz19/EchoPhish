@@ -23,8 +23,9 @@ It only demonstrates "how phishing works". You shall not misuse the information 
 
 
 ## Requiriments
-1. Cloudflared
-2. Python3
+1. Python3
+2. Cloudflared
+3. TunnelMole
    
 
 ## Installation
@@ -36,7 +37,8 @@ pip install -r requirements.txt
 ```
 ## Running the Code
 ```
-sudo python3 main.py
+chmod +x EchoPhish
+./EchoPhish
 ```
 ## Demo
 
