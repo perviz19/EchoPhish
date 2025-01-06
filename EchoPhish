@@ -43,7 +43,7 @@ banner1() {
 }
 
 check_dependencies() {
-    if ! command -v cloudflared &> /dev/null; then
+    if ! command -v cloudflared &> /dev/null || ! cloudflared --version 2>&1 | grep -q 'permission denied'; then
         echo -e "${YELLOW}Cloudflared is not installed. Installing...${RESET}"
         if [ -d "/data/data/com.termux" ]; then
             pkg update -y && pkg install -y cloudflared
