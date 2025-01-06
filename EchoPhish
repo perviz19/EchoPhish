@@ -46,7 +46,7 @@ check_dependencies() {
     if ! command -v cloudflared &> /dev/null; then
         echo -e "${YELLOW}Cloudflared is not installed. Installing...${RESET}"
         if [ -d "/data/data/com.termux" ]; then
-            wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64 -O $PREFIX/bin/cloudflared
+            pkg update -y && pkg install -y cloudflared
         else
             wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -O /usr/local/bin/cloudflared
         fi
