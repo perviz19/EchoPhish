@@ -8,33 +8,6 @@ BLUE='\033[0;34m'
 BOLD='\033[1m'
 RESET='\033[0m'
 
-check_update() {
-    git fetch origin
-
-    LOCAL_COMMIT=$(git rev-parse HEAD)
-    REMOTE_COMMIT=$(git rev-parse origin/$(git rev-parse --abbrev-ref HEAD))
-
-    if [ "$LOCAL_COMMIT" != "$REMOTE_COMMIT" ]; then
-        echo -e -n "\n${YELLOW} [ ? ] A new update is available. Do you want to update? (Yes/No): ${YELLOW}"
-        read -r response
-        if [[ "$response" =~ ^[Yy][Ee][Ss]$ || "$response" =~ ^[Yy]$ ]]; then
-            echo -e "\n${YELLOW} [ ? ] Updating...\n${RESET}"
-            sleep 1
-            git reset --hard
-            git pull
-            echo -e "\n${GREEN} [ + ] Update completed.${RESET}\n"
-            sleep 1
-        else
-            echo -e "${RED} [ ! ] Update skipped.${RESET}\n"
-            sleep 1
-        fi
-    else
-        echo -e "\n${GREEN} [ + ] No updates available.${RESET}\n"
-        sleep 1
-    fi
-}
-
-
 cleanup() {
     if pgrep -f "cloudflared" > /dev/null; then
         killall cloudflared
@@ -58,8 +31,38 @@ cleanup() {
     exit 0
 }
 
-
 trap cleanup SIGINT
+
+
+check_update() {
+    git fetch origin
+    clear
+    banner
+    LOCAL_COMMIT=$(git rev-parse HEAD)
+    REMOTE_COMMIT=$(git rev-parse origin/$(git rev-parse --abbrev-ref HEAD))
+
+    if [ "$LOCAL_COMMIT" != "$REMOTE_COMMIT" ]; then
+        echo -e -n "\n${YELLOW} [ ? ] A new update is available. Do you want to update? (Yes/No): ${YELLOW}"
+        read -r response
+        if [[ "$response" =~ ^[Yy][Ee][Ss]$ || "$response" =~ ^[Yy]$ ]]; then
+            echo -e "\n${YELLOW} [ ? ] Updating...\n${RESET}"
+            sleep 1
+            git reset --hard
+            git pull
+            clear
+            banner
+            echo -e "\n${GREEN} [ + ] Update completed.${RESET}\n"
+            sleep 2
+            cleanup
+        else
+            echo -e "${RED} [ ! ] Update skipped.${RESET}\n"
+            sleep 1
+        fi
+    else
+        echo -e "\n${GREEN} [ + ] No updates available.${RESET}\n"
+        sleep 1
+    fi
+}
 
 banner() {
     echo -e "${CYAN} _____                                                     _____ "
@@ -156,11 +159,14 @@ check_dependencies() {
 install_python_dependencies() {
     if [ ! -f "./env/bin/activate" ]; then
         echo -e "\n${RED} [ ! ] Virtual environment not found, creating...${RESET}\n"
+        sleep 2
         python3 -m venv env
     fi
     source ./env/bin/activate
     pip install --upgrade pip
     pip install -r requirements.txt
+    clear
+    banner
     echo -e "\n${GREEN} [ + ] Dependencies installed and virtual environment activated.${RESET}\n"
     sleep 2
 }
@@ -241,10 +247,11 @@ select_methode () {
         3)
             echo -e "${GREEN} [ + ] Starting the application on port $port ...${RESET}"
             gunicorn --bind 0.0.0.0:$port web_app:app 2>/dev/null &  
+            sleep 1
+            echo -e "\n${GREEN} [ + ] Starting Tunnelmole on port $port...${RESET}"
             sleep 2
             clear
             banner
-            echo -e "${GREEN} [ + ] Starting Tunnelmole on port $port...${RESET}"
             tunnelmole $port 
             sleep 2
             ;;

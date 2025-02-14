@@ -32,7 +32,7 @@ It only demonstrates "how phishing works". You shall not misuse the information 
 ## Installation dependency
 ```bash
 apt update -y
-apt install -y git python3 python3-pip python3-venv
+apt install -y git python python-pip python-venv
 ```
 ## Running the Code
 ```bash
