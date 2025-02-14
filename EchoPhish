@@ -128,13 +128,14 @@ check_dependencies() {
 
 install_python_dependencies() {
     if [ ! -f "./env/bin/activate" ]; then
-        echo -e "${RED} [ ! ] Virtual environment not found, creating..."
+        echo -e "\n${RED} [ ! ] Virtual environment not found, creating...${RESET}\n"
         python3 -m venv env
     fi
     source ./env/bin/activate
     pip install --upgrade pip
     pip install -r requirements.txt
-    echo -e "${GREEN} [ + ] Dependencies installed and virtual environment activated."
+    echo -e "\n${GREEN} [ + ] Dependencies installed and virtual environment activated.${RESET}\n"
+    sleep 2
 }
 
 select_methode () {
@@ -239,3 +240,6 @@ install_python_dependencies
 check_dependencies
 select_methode
 
+while true; do
+    sleep 1
+done
