@@ -224,7 +224,7 @@ select_methode () {
 }
 
 git reset --hard
-git pull # test
+git pull # test 2
 
 select_methode
 
