@@ -222,9 +222,7 @@ select_methode () {
             gunicorn --bind 0.0.0.0:$port web_app:app 2>/dev/null &  
             sleep 2
             cloudflared tunnel --no-autoupdate --metrics localhost:55555 --url http://localhost:$port 2>/dev/null & 
-            clear
-            banner
-            echo -e "${GREEN} [ + ] Cloudflared starting...."
+            echo -e "\n${GREEN} [ + ] Cloudflared starting...."
 
             result=""
             while [[ -z "$result" || "$result" == "null" ]]; do
