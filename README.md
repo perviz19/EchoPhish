@@ -38,8 +38,8 @@ apt install -y git python3 python3-pip python3-venv
 ```bash
 git clone https://github.com/perviz19/EchoPhish.git
 cd EchoPhish
-python3 -m venv environment_EchoPhish
-source environment_EchoPhish/bin/activate
+python3 -m venv env
+source env/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
