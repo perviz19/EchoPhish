@@ -3,3 +3,4 @@ pytz
 requests
 python-dotenv
 colorama
+gunicorn
