@@ -128,7 +128,7 @@ check_dependencies() {
 
 install_python_dependencies() {
     if [ ! -f "./env/bin/activate" ]; then
-        echo "${RED} [ ! ] Virtual environment not found, creating..."
+        echo -e "${RED} [ ! ] Virtual environment not found, creating..."
         python3 -m venv env
     fi
     source ./env/bin/activate
