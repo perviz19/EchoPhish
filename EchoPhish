@@ -223,7 +223,9 @@ select_methode () {
     esac
 }
 
-git pull #test
+git reset --hard
+git pull # test
+
 select_methode
 
 while true; do
