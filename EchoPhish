@@ -19,14 +19,18 @@ check_update() {
         read -r response
         if [[ "$response" =~ ^[Yy][Ee][Ss]$ || "$response" =~ ^[Yy]$ ]]; then
             echo -e "\n${YELLOW} [ ? ] Updating...\n${RESET}"
+            sleep 1
             git reset --hard
             git pull
             echo -e "\n${GREEN} [ + ] Update completed.${RESET}\n"
+            sleep 1
         else
             echo -e "${RED} [ ! ] Update skipped.${RESET}\n"
+            sleep 1
         fi
     else
         echo -e "\n${GREEN} [ + ] No updates available.${RESET}\n"
+        sleep 1
     fi
 }
 
