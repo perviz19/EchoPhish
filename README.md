@@ -34,17 +34,10 @@ It only demonstrates "how phishing works". You shall not misuse the information 
 apt update -y
 apt install -y git python3 python3-pip python3-venv
 ```
-## Installation Source code
+## Running the Code
 ```bash
 git clone https://github.com/perviz19/EchoPhish.git
 cd EchoPhish
-python3 -m venv env
-source env/bin/activate
-pip install --upgrade pip
-pip install -r requirements.txt
-```
-## Running the Code
-```
 chmod +x EchoPhish
 ./EchoPhish
 ```

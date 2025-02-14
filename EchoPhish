@@ -26,6 +26,7 @@ cleanup() {
         echo -e "\n${YELLOW} [ ! ] Web application (gunicorn) stopped.${RESET}\n"
         sleep 1
     fi
+    deactivate
 
     exit 0
 }
@@ -86,7 +87,6 @@ cloudflared_install() {
 }
 
 
-
 check_dependencies() {
     if ! cloudflared --version 2>/dev/null | grep -q '2025.1.0'; then
         cloudflared_install
@@ -126,7 +126,16 @@ check_dependencies() {
     fi
 }
 
-check_dependencies
+install_python_dependencies() {
+    if [ ! -f "./env/bin/activate" ]; then
+        echo "${RED} [ ! ] Virtual environment not found, creating..."
+        python3 -m venv env
+    fi
+    source ./env/bin/activate
+    pip install --upgrade pip
+    pip install -r requirements.txt
+    echo -e "${GREEN} [ + ] Dependencies installed and virtual environment activated."
+}
 
 select_methode () {
     clear
@@ -224,10 +233,9 @@ select_methode () {
 }
 
 git reset --hard
-git pull # test 2
+git pull 
 
+install_python_dependencies
+check_dependencies
 select_methode
 
-while true; do
-    sleep 1
-done
