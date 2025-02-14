@@ -25,9 +25,18 @@ def index():
 
     time_zone = time.tzname[0]
     utc_now = datetime.datetime.now(datetime.timezone.utc)
-    user_tz = pytz.timezone(time_zone)
-    user_now = utc_now.astimezone(user_tz)
-    visit_time = user_now.strftime("%Y-%m-%d %H:%M:%S")
+    try:
+        if time_zone.startswith(("+", "-")) or time_zone.isdigit():
+            offset_hours = int(time_zone.replace("+", "").replace("-", ""))
+            user_tz = pytz.FixedOffset(offset_hours * 60)  
+        else:
+            user_tz = pytz.timezone(time_zone)
+        user_now = utc_now.astimezone(user_tz)
+        visit_time = user_now.strftime("%Y-%m-%d %H:%M:%S")
+    except pytz.UnknownTimeZoneError:
+        print("Geçersiz saat dilimi:", time_zone)
+        user_tz = pytz.utc 
+        visit_time = utc_now.strftime("%Y-%m-%d %H:%M:%S")
     
     if user_agent is not None:
         first_art(visit_time, user_ip.strip(), user_agent)
