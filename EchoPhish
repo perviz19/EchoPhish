@@ -8,6 +8,29 @@ BLUE='\033[0;34m'
 BOLD='\033[1m'
 RESET='\033[0m'
 
+check_update() {
+    git fetch origin
+
+    LOCAL_COMMIT=$(git rev-parse HEAD)
+    REMOTE_COMMIT=$(git rev-parse origin/$(git rev-parse --abbrev-ref HEAD))
+
+    if [ "$LOCAL_COMMIT" != "$REMOTE_COMMIT" ]; then
+        echo -e -n "\n${YELLOW} [ ? ] A new update is available. Do you want to update? (Yes/No): ${YELLOW}"
+        read -r response
+        if [[ "$response" =~ ^[Yy][Ee][Ss]$ || "$response" =~ ^[Yy]$ ]]; then
+            echo "\n${YELLOW} [ ? ] Updating...\n${RESET}"
+            git reset --hard
+            git pull
+            echo "\n${GREEN} [ + ] Update completed.${RESET}\n"
+        else
+            echo "${RED} [ ! ] Update skipped.${RESET}\n"
+        fi
+    else
+        echo "\n${GREEN} [ + ] No updates available.${RESET}\n"
+    fi
+}
+
+
 cleanup() {
     if pgrep -f "cloudflared" > /dev/null; then
         killall cloudflared
@@ -233,8 +256,7 @@ select_methode () {
     esac
 }
 
-git reset --hard
-git pull 
+check_update
 
 install_python_dependencies
 check_dependencies
