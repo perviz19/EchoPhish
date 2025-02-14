@@ -53,7 +53,7 @@ check_update() {
             banner
             echo -e "\n${GREEN} [ + ] Update completed.${RESET}\n"
             sleep 2
-            cleanup
+            exit 0
         else
             echo -e "${RED} [ ! ] Update skipped.${RESET}\n"
             sleep 1
