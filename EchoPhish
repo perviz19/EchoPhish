@@ -223,8 +223,7 @@ select_methode () {
     esac
 }
 
-
-
+git pull #test
 select_methode
 
 while true; do
