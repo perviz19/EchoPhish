@@ -18,15 +18,15 @@ check_update() {
         echo -e -n "\n${YELLOW} [ ? ] A new update is available. Do you want to update? (Yes/No): ${YELLOW}"
         read -r response
         if [[ "$response" =~ ^[Yy][Ee][Ss]$ || "$response" =~ ^[Yy]$ ]]; then
-            echo "\n${YELLOW} [ ? ] Updating...\n${RESET}"
+            echo -e "\n${YELLOW} [ ? ] Updating...\n${RESET}"
             git reset --hard
             git pull
-            echo "\n${GREEN} [ + ] Update completed.${RESET}\n"
+            echo -e "\n${GREEN} [ + ] Update completed.${RESET}\n"
         else
-            echo "${RED} [ ! ] Update skipped.${RESET}\n"
+            echo -e "${RED} [ ! ] Update skipped.${RESET}\n"
         fi
     else
-        echo "\n${GREEN} [ + ] No updates available.${RESET}\n"
+        echo -e "\n${GREEN} [ + ] No updates available.${RESET}\n"
     fi
 }
 
