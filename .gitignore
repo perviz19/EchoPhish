@@ -4,4 +4,4 @@ app/__pycache__/*
 env
 env/*_
 output/*
-./env/*
+.env
