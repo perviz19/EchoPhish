@@ -95,7 +95,7 @@ cloudflared_install() {
         go build -v -ldflags "-X \"main.Version=2025.1.0\" -X \"main.BuildTime=$(date -u '+%Y.%m.%d-%H:%M UTC')\"" ./cmd/cloudflared
         install -Dm700 -t "$TERMUX_PREFIX/bin" cloudflared
         rm 2025.1.0.tar.gz*
-        rm -rf ./cloudflared
+        rm -rf ./cloudflared*
         clear
         banner
         echo -e "${GREEN} [ + ] Cloudflared 2025.1.0 has been successfully installed!${RESET}"
