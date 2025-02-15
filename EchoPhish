@@ -94,6 +94,7 @@ cloudflared_install() {
         pkg install -y golang
         go build -v -ldflags "-X \"main.Version=2025.1.0\" -X \"main.BuildTime=$(date -u '+%Y.%m.%d-%H:%M UTC')\"" ./cmd/cloudflared
         install -Dm700 -t "$TERMUX_PREFIX/bin" cloudflared
+        cd ../
         rm 2025.1.0.tar.gz*
         rm -rf ./cloudflared*
         clear
