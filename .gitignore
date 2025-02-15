@@ -1,5 +1,7 @@
-__pycache__/
-app/__pycache__/
-env/
-output/
-./env/
+__pycache_
+__pycache__/*
+app/__pycache__/*
+env
+env/*_
+output/*
+./env/*
