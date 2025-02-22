@@ -195,7 +195,9 @@ mask_url() {
     echo -e "\n${GREEN} [ + ] URL masking...${RESET}\n"
     local masked_url=$(echo "$short_url" | sed "s|//|://${custom_domain}@|")
     sleep 3
-    
+    clear
+    banner
+
     echo -e "${YELLOW} \n   Masked url: "
     echo -e "------------------------------------------------"
     echo -e "${GREEN} [ + ] ${masked_url}${YELLOW}"
@@ -289,6 +291,8 @@ select_methode () {
 
             echo -e -n "\n${YELLOW} [ ? ] Do you want mask url? (Y/N): ${RESET}"
             read -r response
+            response=${response:-"Y"}
+
             if [[ "$response" =~ ^[Yy][Ee][Ss]$ || "$response" =~ ^[Yy]$ ]]; then
                 mask_url https://${original_url}
             else
