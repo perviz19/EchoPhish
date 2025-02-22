@@ -180,18 +180,19 @@ install_python_dependencies() {
 
 shorten_url() {
     local long_url="$1"
-    local api_url="https://is.gd/create.php?format=simple&url=${long_url}"
+    local api_url="https://v.gd/create.php?format=simple&url=${long_url}"
     local short_url=$(curl -s "$api_url")
 
     if [[ -z "$short_url" ]]; then
-         echo -e "${RED} [ ! ] URL shortening failed!${RESET}"
+        echo -e "${RED} [ ! ] URL shortening failed!${RESET}"
         return 1
     fi
-        echo -e "${YELLOW} \nShort url: "
-        echo -e "------------------------------------------------"
-        echo -e "${GREEN} [ + ] ${short_url}${YELLOW}"
-        echo -e "------------------------------------------------"
+    echo -e "${YELLOW} \nShort url: "
+    echo -e "------------------------------------------------"
+    echo -e "${GREEN} [ + ] ${short_url}${YELLOW}"
+    echo -e "------------------------------------------------"
 }
+
 
 
 
