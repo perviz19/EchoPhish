@@ -184,7 +184,7 @@ install_python_dependencies() {
 mask_url() {
     local long_url="$1"
     
-    echo -e "\n${GREEN} [ + ] URL shortening...${RESET}\n"
+    echo -e "\n${GREEN} [ + ] URL shortening...${RESET}"
     sleep 1
     local short_url=$(short_url "$long_url")
 
