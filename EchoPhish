@@ -8,7 +8,7 @@ BLUE='\033[0;34m'
 BOLD='\033[1m'
 RESET='\033[0m'
 
-VERSION = 2.4
+export VERSION=2.4
 
 banner() {
     echo -e "${CYAN} _____                                                     _____ "
@@ -22,7 +22,7 @@ banner() {
     echo -e " |   | |______\\___|_| |_|\\___/  |_|    |_| |_|_|___/_| |_| |   | "
     echo -e " |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| "
     echo -e "(_____)                                                   (_____)${RESET}${YELLOW}"
-    echo -e "           https://t.me/AzerbaijanTermux        V${VERSION}\n"
+    echo -e "           https://t.me/AzerbaijanTermux        V ${VERSION}\n"
     echo -e "${RED}    "
 }
 
