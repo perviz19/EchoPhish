@@ -83,14 +83,14 @@ banner() {
 
 cloudflared_install() {
     if [ -d "/data/data/com.termux" ]; then
-        if ! command -v wget &> /dev/null then
-            pkg install -y wget
+        if ! command -v curl &> /dev/null then
+            pkg install -y curl
         clear
         banner
         echo -e "\n${YELLOW} [ + ] Termux environment detected! Installing Cloudflared for Termux...${RESET}\n"
         
         export TERMUX_PREFIX=~/../usr/
-        wget https://github.com/cloudflare/cloudflared/archive/refs/tags/2025.1.0.tar.gz
+        curl -LO https://github.com/cloudflare/cloudflared/archive/refs/tags/2025.1.0.tar.gz
         tar -xvzf 2025.1.0.tar.gz
         cd cloudflared-2025.1.0 || exit 1
         pkg install -y golang
@@ -105,13 +105,13 @@ cloudflared_install() {
         echo -e "${BLUE} [ + ] Installation directory: ${BOLD}$TERMUX_PREFIX/bin${RESET}"
     
     else
-        if ! command -v wget &> /dev/null then
-                sudo apt install -y wget
+        if ! command -v curl &> /dev/null then
+                sudo apt install -y curl
         clear
         banner
         echo -e "\n${YELLOW} [ + ] Standard Linux environment detected! Installing Cloudflared for Linux...${RESET}\n"
         
-        sudo wget -O /usr/local/bin/cloudflared https://github.com/cloudflare/cloudflared/releases/download/2025.1.0/cloudflared-linux-amd64
+        sudo curl -L -O /usr/local/bin/cloudflared https://github.com/cloudflare/cloudflared/releases/download/2025.1.0/cloudflared-linux-amd64
         sudo chmod +x /usr/local/bin/cloudflared
 
         clear
