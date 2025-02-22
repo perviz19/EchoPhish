@@ -83,8 +83,9 @@ banner() {
 
 cloudflared_install() {
     if [ -d "/data/data/com.termux" ]; then
-        if ! command -v curl &> /dev/null then
+        if ! command -v curl &> /dev/null; then
             pkg install -y curl
+        fi
         clear
         banner
         echo -e "\n${YELLOW} [ + ] Termux environment detected! Installing Cloudflared for Termux...${RESET}\n"
@@ -105,8 +106,9 @@ cloudflared_install() {
         echo -e "${BLUE} [ + ] Installation directory: ${BOLD}$TERMUX_PREFIX/bin${RESET}"
     
     else
-        if ! command -v curl &> /dev/null then
-                sudo apt install -y curl
+        if ! command -v curl &> /dev/null; then
+            sudo apt install -y curl
+        fi
         clear
         banner
         echo -e "\n${YELLOW} [ + ] Standard Linux environment detected! Installing Cloudflared for Linux...${RESET}\n"
