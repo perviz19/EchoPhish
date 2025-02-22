@@ -178,6 +178,23 @@ install_python_dependencies() {
     sleep 2
 }
 
+shorten_url() {
+    local long_url="$1"
+    local api_url="https://is.gd/create.php?format=simple&url=${long_url}"
+    local short_url=$(curl -s "$api_url")
+
+    if [[ -z "$short_url" ]]; then
+         echo -e "${RED} [ ! ] URL shortening failed!${RESET}"
+        return 1
+    fi
+        echo -e "${YELLOW} \nShort url: "
+        echo -e "------------------------------------------------"
+        echo -e "${GREEN} [ + ] ${short_url}${YELLOW}"
+        echo -e "------------------------------------------------"
+}
+
+
+
 select_methode () {
     clear
     banner
@@ -237,18 +254,24 @@ select_methode () {
             cloudflared tunnel --no-autoupdate --metrics localhost:55555 --url http://localhost:$port 2>/dev/null & 
             echo -e "\n${GREEN} [ + ] Cloudflared starting...."
 
-            result=""
-            while [[ -z "$result" || "$result" == "null" ]]; do
-                result=$(curl -s http://localhost:55555/quicktunnel | jq -r '.hostname')
+            original_url=""
+            while [[ -z "$original_url" || "$original_url" == "null" ]]; do
+                original_url=$(curl -s http://localhost:55555/quicktunnel | jq -r '.hostname')
                 sleep 1 
             done
 
             clear
             banner
-            echo -e "${YELLOW} \nURLs: "
+            echo -e "${YELLOW} \nOriginal url: "
             echo -e "------------------------------------------------"
-            echo -e "${GREEN} [ + ] https://${result}${YELLOW}"
+            echo -e "${GREEN} [ + ] https://${original_url}${YELLOW}"
             echo -e "------------------------------------------------"
+
+            echo -e -n "\n${YELLOW} [ ? ] Do you want sort url? (Y/N): ${YELLOW}"
+            read -r response
+            if [[ "$response" =~ ^[Yy][Ee][Ss]$ || "$response" =~ ^[Yy]$ ]]; then
+                shorten_url https://${original_url}
+            fi
             ;;
 
         3)
