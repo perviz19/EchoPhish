@@ -116,7 +116,7 @@ cloudflared_install() {
         banner
         echo -e "\n${YELLOW} [ + ] Standard Linux environment detected! Installing Cloudflared for Linux...${RESET}\n"
         
-        sudo curl -L -O /usr/local/bin/cloudflared https://github.com/cloudflare/cloudflared/releases/download/2025.1.0/cloudflared-linux-amd64
+        sudo curl -L -o /usr/local/bin/cloudflared https://github.com/cloudflare/cloudflared/releases/download/2025.1.0/cloudflared-linux-amd64
         sudo chmod +x /usr/local/bin/cloudflared
 
         clear
