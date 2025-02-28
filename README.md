@@ -1,5 +1,7 @@
 # EchoPhish
 
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fperviz19%2FEchoPhish&count_bg=%2379C83D&title_bg=%23555555&icon=github.svg&icon_color=%2319A9DD&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+
 ##             Disclaimer
 
 Any actions and or activities related to EchoPhish is solely your responsibility. The misuse of this toolkit can result in criminal charges brought against the persons in question. The contributors will not be held responsible in the event any criminal charges be brought against any individuals misusing this toolkit to break the law.
