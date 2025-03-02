@@ -26,15 +26,11 @@ It only demonstrates "how phishing works". You shall not misuse the information 
 
 ## Requiriments
 1. Python3
-2. Cloudflared
-3. Nodejs
-4. TunnelMole
    
-
 ## Installation dependency
 ```bash
 apt update -y
-apt install -y git wget python python-pip python-venv 
+apt install -y git curl python python-pip 
 ```
 ## Running the Code
 ```bash
