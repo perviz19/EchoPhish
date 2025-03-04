@@ -44,9 +44,11 @@ cleanup() {
         echo -e "\n${YELLOW} [ ! ] Web application (gunicorn) stopped.${RESET}\n"
         sleep 1
     fi
-    deactivate
 
-    exit 0
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        deactivate
+    fi
+
 }
 
 trap cleanup SIGINT
