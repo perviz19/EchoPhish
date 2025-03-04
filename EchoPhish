@@ -44,12 +44,40 @@ cleanup() {
         echo -e "\n${YELLOW} [ ! ] Web application (gunicorn) stopped.${RESET}\n"
         sleep 1
     fi
-    deactivate
+
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        deactivate
+    fi
 
     exit 0
 }
 
 trap cleanup SIGINT
+
+clean_background_process(){
+    if pgrep -f "cloudflared" > /dev/null; then
+        killall cloudflared
+        echo -e "\n${YELLOW} [ ! ] Cloudflared stopped.${RESET}\n"
+    fi
+
+    if pgrep -f "tunnelmole" > /dev/null || pgrep -f "tmole" > /dev/null || pgrep -f "x-www-browser" > /dev/null; then
+        pkill -f "tunnelmole"
+        pkill -f "tmole"
+        pkill -f "x-www-browser"
+        echo -e "\n${YELLOW} [ ! ] Tunnelmole stopped.${RESET}\n"
+    fi
+
+    if pgrep -f "gunicorn" > /dev/null; then
+        pkill -f "gunicorn"
+        echo -e "\n${YELLOW} [ ! ] Web application (gunicorn) stopped.${RESET}\n"
+        sleep 1
+    fi
+
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        deactivate
+    fi
+
+}
 
 
 check_update() {
@@ -71,9 +99,9 @@ check_update() {
             git pull
             clear
             banner
-            echo -e "\n${GREEN} [ + ] Update completed.${RESET}\n"
-            sleep 2
-            exit 0
+            echo -e "\n${GREEN} [ + ] Update completed. Restarting the script... ${RESET}\n"
+            sleep 1
+            exec bash "$BASH_SOURCE"
         else
             echo -e "${RED} [ ! ] Update skipped.${RESET}\n"
             sleep 1
@@ -322,7 +350,7 @@ select_methode () {
 }
 
 check_update
-
+clean_background_process
 install_python_dependencies
 check_dependencies
 select_methode
