@@ -71,9 +71,9 @@ check_update() {
             git pull
             clear
             banner
-            echo -e "\n${GREEN} [ + ] Update completed.${RESET}\n"
-            sleep 2
-            exit 0
+            echo -e "\n${GREEN} [ + ] Update completed. Restarting the script... ${RESET}\n"
+            sleep 1
+            exec "$0"
         else
             echo -e "${RED} [ ! ] Update skipped.${RESET}\n"
             sleep 1
