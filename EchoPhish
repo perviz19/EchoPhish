@@ -73,7 +73,7 @@ check_update() {
             banner
             echo -e "\n${GREEN} [ + ] Update completed. Restarting the script... ${RESET}\n"
             sleep 1
-            exec "$0"
+            exec bash "$BASH_SOURCE"
         else
             echo -e "${RED} [ ! ] Update skipped.${RESET}\n"
             sleep 1
