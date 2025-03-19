@@ -4,3 +4,4 @@ requests
 python-dotenv
 colorama
 gunicorn
+secure-smtplib==0.1.1

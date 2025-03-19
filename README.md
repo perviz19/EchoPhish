@@ -46,3 +46,79 @@ https://github.com/perviz19/EchoPhish/assets/157914250/52a96295-2d5e-41a2-bec7-2
 
 
 
+## Güncelleme
+
+Bu Repo EchoPhish Tooluna Kendi Yapmış Olduğum Mail Spoofer Toolumun Entegre Edilmiş Halidir.
+
+
+## Eklenen Özellikler
+
+- **E-posta Gönderimi:** Gerçek bir e-posta adresinden gönderilmiş gibi görünen sahte e-postalar gönderilebilir.
+- **SMTP Entegrasyonu:** Güçlü SMTP sunucusu desteği ile kullanıcılar istedikleri adreslerden e-posta gönderebilir.
+- **Özelleştirilebilir Konu ve İçerik:** E-posta konusu ve içeriği tamamen özelleştirilebilir, bu sayede daha etkili phishing saldırıları düzenlenebilir.
+- **Kimlik Gizleme:** Gönderen e-posta adresi ve ismi taklit edilebilir, gerçek göndereni gizler.
+- **Entegrasyon:** Kullanmak İçin Tek Yapmanız Gereken Toolu Çalıştırıp Linki Oluşturduktan Sonra m3.py yi çalıştıran seçeneği seçip kurbanın maili yazmanız Instagram Şifre Yenileme Email Şablonu Kullandığı İçin Instagram Gibi Davranabilirsiniz
+
+
+
+## Config Nasıl Ayarlanmalı
+ - **smtp_server:** Bu Kısıma Smtp Serverinizin Adresi Girmeniz Lazım Ücretsiz Ve En Kolay Yöntem Gmail Smtp Kullanmak.
+ 
+- **smtp_port:** Bu Kısıma Serverinizin Smtp Portunu Girmeniz Lazım Eğer Gmail Kullanıyorsanız Buraya 587 Vermeniz Lazım.
+
+- **use_tls:** Bu Kısımda Tls Kullanılmasını İstiyorsanız true'de kalsın Tls Daha Güvenli İletişim Sağlar.
+
+- **from_adress:** Bu Kısım Smtp Serverinize Login Olmak İçin Gereken Mail Veya Kullanıcı Adı Girebilirsiniz Gmail Kullanıyorsanız Bu Servisi Açtığınız Mail Adresidir.
+
+- **password:** Bu Kısıma Smtp Şifrenizi Girmeniz Lazım Eğer Gmail Kullanıyorsanız Gmail Tarafından Hizmet Oluşturulduğunda Verilen Şifreyi girmeniz gerekir.
+
+
+## Gmail SMTP Kullanma
+
+**Birinci Yol**
+
+
+- **1**-Öncelikle Gmail Uygulamasına Girip 2 Faktörlü Doğrulamayı Açmanız Lazım Güvenlik Sekmesinden Açabilirsiniz.
+
+
+- **2**-Gmail Ayarlarında Arama Kısmına Uygulama Şifresi Yazıp Yeni Uygulama Oluşturun Ve Verilen Şifreyi Kaydedin.
+
+
+- **3**-Configde From Adress Kısmına Sifreyi Oluşturduğunuz Maili Girin.
+
+
+- **4**-Password Kısmında Verilen Şifreyi Girin.
+
+- **5**-Smtp Port Kısmına 587 (SSL Kullanıcaksanız 465)
+
+
+- **6**-Smtp Server Kısmında smtp.gmail.com girin.
+
+
+- **İkinci Yol**
+
+
+- **1**-Arama Kısmına Daha Az Güvenli Erişim Yazıp Erişime İzin Verin Eğer Çıkmazsa Güvenlik Sekmesinde Bulabilirsiniz.
+
+- **2**-Smtp Port Ve Smtp Server Kısımları Aynı Olucak.
+
+- **3**-From Adressde Aynı Olucak.
+
+- **4**-Password Kendi Mail Şifreniz Olucak.
+
+- **5**-Mail Şifreniz Güvendedir Çünkü Config Dosyası Sadece Sizin Cihazınızda Yer Alır Ve Rat Yemeden Dışardan Erişilmesi Çok Zordurki Zaten Cihazınıza Erişildiyse Muhtemelen Mailiniz Çoktan Ele Geçirilmiştir
+
+
+
+
+
+## TOOL HAKKINDA 
+
+Ana Spoof Toolu Şuanda Betada Şuan Sadece 1 Saatlik Bir Süreden Az Bir Zamanda Kodlanmış Bir Tool Var Elimde Bu Haliyle Yayımlamak İstemiyorm Belki İleride Bir Aplikasyon Veya Site Üzerinden Arayüzlü Şekilde Yayımlarım Bunu Yaparsam Tabiki Sadece Script Şeklinde Bir İde Ortamında Çalışacak Şekildede Yayımlıyacam.
+
+-Şuanlık Betasını Tg Kanalımda Paylaştım
+[Telegram](https://t.me/+zgqfH4uwo7xlOTg0)
+
+## Sorumluluk Red Beyanı 
+
+Bu Tool Kullanılarak Yapılan Tüm Herşeyden Kullanıcı Sorumludur Bu Tool Sadece Eğitim İçin Kullanılmak Üzere Geliştirildi. Bu Tool İle Yapılan Her İşlemden Kullanıcı Sorumludur.

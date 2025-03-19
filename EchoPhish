@@ -285,60 +285,103 @@ select_methode () {
     banner
 
     case $choose in
-        1)
-            echo -e "${GREEN} [ + ] Starting the application on port $port ...${RESET}"
-            gunicorn --bind 0.0.0.0:$port web_app:app 2>/dev/null &  
-            sleep 1
-            clear
-            banner
-            echo -e "\n${YELLOW}   Local url: "
-            echo -e "------------------------------------------------"
-            echo -e "${GREEN} [ + ] http://127.0.0.1:$port${YELLOW}"
-            echo -e "------------------------------------------------"
-            ;;
+1)
+    echo -e "${GREEN} [ + ] Starting the application on port $port ...${RESET}"
+    gunicorn --bind 0.0.0.0:$port web_app:app 2>/dev/null &  
+    sleep 1
+    clear
+    banner
+    echo -e "\n${YELLOW}   Local url: "
+    echo -e "------------------------------------------------"
+    echo -e "${GREEN} [ + ] http://127.0.0.1:$port${YELLOW}"
+    echo -e "------------------------------------------------"
+
+    
+    echo -e -n "\n${YELLOW} [ ? ] Do you want to run m3.py? (Y/N): ${RESET}"
+    read -r run_m3
+    run_m3=${run_m3:-"N"}
+
+    if [[ "$run_m3" =~ ^[Yy][Ee][Ss]$ || "$run_m3" =~ ^[Yy]$ ]]; then
+        echo -e "${GREEN} [ + ] Running m3.py...${RESET}"
+        python3 m3.py "http://127.0.0.1:$port"  
+    else
+        echo -e "${RED} [ ! ] m3.py skipped.${RESET}\n"
+    fi
+    ;;
+    
 
         2)
-            echo -e "${GREEN} [ + ] Starting the application on port $port ...${RESET}"
-            gunicorn --bind 0.0.0.0:$port web_app:app 2>/dev/null &  
-            sleep 1
-            cloudflared tunnel --no-autoupdate --metrics localhost:55555 --url http://localhost:$port 2>/dev/null & 
-            echo -e "\n${GREEN} [ + ] Cloudflared starting...."
+    echo -e "${GREEN} [ + ] Starting the application on port $port ...${RESET}"
+    gunicorn --bind 0.0.0.0:$port web_app:app 2>/dev/null &  
+    sleep 1
+    cloudflared tunnel --no-autoupdate --metrics localhost:55555 --url http://localhost:$port 2>/dev/null & 
+    echo -e "\n${GREEN} [ + ] Cloudflared starting...."
 
-            original_url=""
-            while [[ -z "$original_url" || "$original_url" == "null" ]]; do
-                original_url=$(curl -s http://localhost:55555/quicktunnel | jq -r '.hostname')
-                sleep 1 
-            done
+    original_url=""
+    while [[ -z "$original_url" || "$original_url" == "null" ]]; do
+        original_url=$(curl -s http://localhost:55555/quicktunnel | jq -r '.hostname')
+        sleep 1 
+    done
 
-            clear
-            banner
-            echo -e "${YELLOW} \n   Original url: "
-            echo -e "------------------------------------------------"
-            echo -e "${GREEN} [ + ] https://${original_url}${YELLOW}"
-            echo -e "------------------------------------------------"
+    clear
+    banner
+    echo -e "${YELLOW} \n   Original url: "
+    echo -e "------------------------------------------------"
+    echo -e "${GREEN} [ + ] https://${original_url}${YELLOW}"
+    echo -e "------------------------------------------------"
 
-            echo -e -n "\n${YELLOW} [ ? ] Do you want mask url? (Y/N): ${RESET}"
-            read -r response
-            response=${response:-"Y"}
+    echo -e -n "\n${YELLOW} [ ? ] Do you want mask url? (Y/N): ${RESET}"
+    read -r response
+    response=${response:-"Y"}
 
-            if [[ "$response" =~ ^[Yy][Ee][Ss]$ || "$response" =~ ^[Yy]$ ]]; then
-                mask_url https://${original_url}
-            else
-                echo -e "\n${RED} [ ! ] Url masking skipped.${RESET}\n"
-            fi
-            ;;
+    if [[ "$response" =~ ^[Yy][Ee][Ss]$ || "$response" =~ ^[Yy]$ ]]; then
+        mask_url "https://${original_url}"
+    else
+        echo -e "\n${RED} [ ! ] Url masking skipped.${RESET}\n"
+    fi
 
-        3)
-            echo -e "${GREEN} [ + ] Starting the application on port $port ...${RESET}"
-            gunicorn --bind 0.0.0.0:$port web_app:app 2>/dev/null &  
-            sleep 1
-            echo -e "\n${GREEN} [ + ] Starting Tunnelmole on port $port...${RESET}"
-            sleep 2
-            clear
-            banner
-            tunnelmole $port 
-            sleep 1
-            ;;
+    
+    echo -e -n "\n${YELLOW} [ ? ] Do you want to run m3.py? (Y/N): ${RESET}"
+    read -r run_m3
+    run_m3=${run_m3:-"N"}
+
+    if [[ "$run_m3" =~ ^[Yy][Ee][Ss]$ || "$run_m3" =~ ^[Yy]$ ]]; then
+        echo -e "${GREEN} [ + ] Running m3.py...${RESET}"
+        python3 m3.py "https://${original_url}"  
+    else
+        echo -e "${RED} [ ! ] m3.py skipped.${RESET}\n"
+    fi
+    ;;
+
+     3)
+    echo -e "${GREEN} [ + ] Starting the application on port $port ...${RESET}"
+    gunicorn --bind 0.0.0.0:$port web_app:app 2>/dev/null &  
+    sleep 1
+    echo -e "\n${GREEN} [ + ] Starting Tunnelmole on port $port...${RESET}"
+    sleep 2
+    clear
+    banner
+    tunnelmole_output=$(tunnelmole $port)  
+    tunnelmole_url=$(echo "$tunnelmole_output" | grep -oP 'https://\S+')  
+    sleep 1
+
+    echo -e "${YELLOW} \n   Tunnelmole url: "
+    echo -e "------------------------------------------------"
+    echo -e "${GREEN} [ + ] ${tunnelmole_url}${YELLOW}"
+    echo -e "------------------------------------------------"
+
+    
+    echo -e -n "\n${YELLOW} [ ? ] Do you want to run m3.py? (Y/N): ${RESET}"
+    read -r run_m3
+    run_m3=${run_m3:-"N"}
+
+    if [[ "$run_m3" =~ ^[Yy][Ee][Ss]$ || "$run_m3" =~ ^[Yy]$ ]]; then
+        echo -e "${GREEN} [ + ] Running m3.py...${RESET}"
+        python3 m3.py "$tunnelmole_url"  
+    else
+        echo -e "${RED} [ ! ] m3.py skipped.${RESET}\n"
+    fi
+    ;;
 
         *)
             echo -e "${RED} [ ! ] Please enter a valid number!${RESET}"
