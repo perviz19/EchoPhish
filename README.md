@@ -1,5 +1,6 @@
 # EchoPhish
-
+# Note
+   I'm seeing from numerous complaints that the tool is no longer working correctly. Instagram has probably made some changes, but unfortunately, I don't have the time or motivation to fix the tool right now. If anyone wants to fix it, they can submit a pull request. After reviewing the code, I will gladly accept the pull request.
 
 ##             Disclaimer
 
